@@ -26,6 +26,8 @@ import SearchItem from "../components/searchItem/SearchItem";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { filterByUsd, isExchanges } from "../redux/slices/marketsSlice";
 import ExchangeMenu from "../components/exchangeMenu/ExchangeMenu";
+import CoinAndGraph from "../components/coinAndGraph/CoinAndGraph";
+import CoinList from "../components/coinlist/CoinList";
 import { coinClear } from "../redux/slices/simplePriceSlice";
 import { fetchCoinsByMarketCap } from "../redux/slices/marketCapSlice";
 import { fetchAllCoins } from "../redux/slices/coinsAllSlice";
@@ -227,6 +229,8 @@ export default function Home() {
             </Popper>
           </Toolbar>
         </AppBar>
+        <CoinAndGraph />
+        <CoinList />
       </Box>
     </div>
   );
