@@ -40,7 +40,6 @@ export const marketsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchMarkets.fulfilled, (state, action) => {
-        console.log("markets: ", action.payload);
         state.markets = action.payload;
         state.status = "succeeded";
       })

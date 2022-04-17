@@ -30,7 +30,6 @@ export const coinsAllSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchAllCoins.fulfilled, (state, action) => {
-        console.log("assets: ", action.payload);
         state.coinsAll = action.payload;
         state.status = "succeeded";
       })

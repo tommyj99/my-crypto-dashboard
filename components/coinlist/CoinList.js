@@ -35,8 +35,6 @@ const CoinList = () => {
     );
   });
 
-  console.log("items: ", items);
-
   const responsive = {
     50: {
       items: 4,
