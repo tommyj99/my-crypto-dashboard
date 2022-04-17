@@ -11,9 +11,8 @@ const initialState = {
 export const fetchAllCoins = createAsyncThunk(
   "coinsAll/fetchAllCoins",
   async () => {
-    const res = await axios.get(`/assets`);
-    // const res = await axios.get(`https://api.coingecko.com/api/v3/coins/list`);
-    return res.data.result;
+    const res = await axios.get(`api/assets`);
+    return res.data;
   }
 );
 
@@ -31,6 +30,7 @@ export const coinsAllSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchAllCoins.fulfilled, (state, action) => {
+        console.log("assets: ", action.payload);
         state.coinsAll = action.payload;
         state.status = "succeeded";
       })

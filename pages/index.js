@@ -91,7 +91,7 @@ export default function Home() {
   const [coin, setCoin] = React.useState("");
   // SECTION useEffects
   React.useEffect(() => {
-    //dispatch(fetchAllCoins()); // crypto watch
+    dispatch(fetchAllCoins()); // crypto watch
     dispatch(fetchCoinsByMarketCap()); // coin gecko
     dispatch(fetchMarkets()); // crytpo watch
   }, [dispatch]);

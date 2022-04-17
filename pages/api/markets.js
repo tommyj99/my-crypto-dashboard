@@ -21,5 +21,4 @@ export default async function handler(req, res) {
   await axios.get(url).then(({ data }) => {
     res.status(200).json({ data });
   });
-  //res.send({ data });
 }

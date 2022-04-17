@@ -12,7 +12,7 @@ const initialState = {
 export const fetchMarkets = createAsyncThunk(
   "markets/fetchMarkets",
   async () => {
-    const res = await axios.get(`/api/server`);
+    const res = await axios.get(`api/markets`);
     return res.data;
   }
 );
@@ -40,6 +40,7 @@ export const marketsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchMarkets.fulfilled, (state, action) => {
+        console.log("markets: ", action.payload);
         state.markets = action.payload;
         state.status = "succeeded";
       })
