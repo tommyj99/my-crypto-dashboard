@@ -1,8 +1,168 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import * as React from "react";
+import { styled, alpha } from "@mui/material/styles";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Paper,
+  Popper,
+  List,
+} from "@mui/material";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCoinsAll,
+  selectMarketsData,
+  selectMarketsStatus,
+  selectIsExchanges,
+} from "../redux/selectors";
+import SearchItem from "../components/searchItem/SearchItem";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import { filterByUsd, isExchanges } from "../redux/slices/marketsSlice";
+import ExchangeMenu from "../components/exchangeMenu/ExchangeMenu";
+import { coinClear } from "../redux/slices/simplePriceSlice";
+import { fetchCoinsByMarketCap } from "../redux/slices/marketCapSlice";
+import { fetchAllCoins } from "../redux/slices/coinsAllSlice";
+import { fetchMarkets } from "../redux/slices/marketsSlice";
+
+// styled component section
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
 
 export default function Home() {
+  const dispatch = useDispatch();
+  // selectors
+  const coinsAllSelector = useSelector(selectCoinsAll);
+  const marketsSelector = useSelector(selectMarketsData);
+  const marketsStatusSelector = useSelector(selectMarketsStatus);
+  const isExchangesSelector = useSelector(selectIsExchanges);
+  // hooks
+  const [coinSymbol, setCoinSymbol] = React.useState("");
+  const [coinList, setCoinList] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [usdFilter, setUsdFilter] = React.useState(false);
+  // const [isExchanges, setIsExchanges] = React.useState(false);
+  const [coin, setCoin] = React.useState("");
+  // SECTION useEffects
+  React.useEffect(() => {
+    //dispatch(fetchAllCoins()); // crypto watch
+    dispatch(fetchCoinsByMarketCap()); // coin gecko
+    dispatch(fetchMarkets()); // crytpo watch
+  }, [dispatch]);
+
+  // Called when search bar is being populated
+  React.useEffect(() => {
+    if (coinSymbol !== "") {
+      coinsAllSelector.forEach((result) => {
+        if (result.symbol.toLowerCase().startsWith(coinSymbol.toLowerCase())) {
+          // populate symbol list
+          setCoinList((prevArray) => [...prevArray, result.symbol]);
+        }
+      });
+    }
+  }, [coinSymbol, coinsAllSelector]);
+
+  if (marketsSelector !== undefined && usdFilter === false) {
+    dispatch(filterByUsd(filterUsd()));
+    setUsdFilter(true);
+  }
+
+  function filterUsd() {
+    let filteredByUsdPairs = [];
+    marketsSelector.forEach((item) => {
+      if (item.pair.endsWith("usd")) {
+        filteredByUsdPairs.push(item);
+      }
+    });
+    return filteredByUsdPairs;
+  }
+
+  // SECTION handlers
+  function handleChange(Event) {
+    setCoinList([]);
+    setCoinSymbol(Event.target.value);
+    setAnchorEl(Event.currentTarget);
+    setOpen(true);
+  }
+
+  function handleSearchOnEnter(Event) {
+    if (Event.charCode === 13 && coinSymbol !== "") {
+      dispatch(isExchanges(true));
+      dispatch(coinClear());
+      // setIsExchanges(true);
+      setCoin(coinSymbol);
+    }
+  }
+
+  function handleClick(Event) {
+    dispatch(isExchanges(true));
+    dispatch(coinClear());
+    if (Event.currentTarget.innerText !== undefined) {
+      setCoin(Event.currentTarget.innerText);
+    }
+  }
+
+  function handleClickAway() {
+    setOpen(false);
+    setAnchorEl(null);
+    setCoinSymbol("");
+  }
+
+  // SECTION misc functions
+
+  const ExchangeButton = () => {
+    if (isExchangesSelector && marketsStatusSelector === "succeeded") {
+      return <ExchangeMenu coin={coin} />;
+    }
+    return null;
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,59 +171,63 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open-drawer"
+              sx={{ mr: 2 }}
+            >
+              <MenuRoundedIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            >
+              My Crypto App
+            </Typography>
+            <ExchangeButton />
+            <Search hidden={isExchangesSelector} data-testid="search-bar">
+              <SearchIconWrapper aria-label="search-icon">
+                <SearchRoundedIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search coin…"
+                inputProps={{ "aria-label": "search" }}
+                onChange={handleChange}
+                onKeyPress={handleSearchOnEnter}
+                value={coinSymbol}
+              ></StyledInputBase>
+            </Search>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+            <Popper
+              aria-label="popper"
+              open={open}
+              anchorEl={anchorEl}
+              placement="bottom-end"
+            >
+              <Paper>
+                <ClickAwayListener onClickAway={handleClickAway}>
+                  <List>
+                    {coinList.map((listItem, index) => (
+                      <SearchItem
+                        key={index}
+                        listText={listItem}
+                        handleClick={handleClick}
+                      />
+                    ))}
+                  </List>
+                </ClickAwayListener>
+              </Paper>
+            </Popper>
+          </Toolbar>
+        </AppBar>
+      </Box>
     </div>
-  )
+  );
 }
