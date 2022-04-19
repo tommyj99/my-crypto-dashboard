@@ -28,7 +28,7 @@ const CoinAndGraph = (props) => {
     setCoinRank(coinsMCapSelect[props.elementNum].market_cap_rank);
     setCoinPrice(coinsMCapSelect[props.elementNum].current_price);
     setCoinLow(coinsMCapSelect[props.elementNum].low_24h);
-    setCoinHigh(coinsMCapSelect[props.elementNum].high24h);
+    setCoinHigh(coinsMCapSelect[props.elementNum].high_24h);
     setCoinChange24h(coinsMCapSelect[props.elementNum].price_change_24h);
   });
 

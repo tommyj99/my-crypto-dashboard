@@ -23,7 +23,6 @@ const CandleStickCanvas = (props) => {
   React.useEffect(() => {
     if (status === "succeeded") {
       setDohlcvData([]);
-      console.log("data: ", data);
       const dohlcv = Object.values(data);
       dohlcv.forEach((obj) => {
         obj.forEach((element) => {
@@ -44,10 +43,10 @@ const CandleStickCanvas = (props) => {
           setDohlcvData((dohlcvData) => [...dohlcvData, dohlcvDataObj]);
         });
       });
+      console.log("candledata: ", dohlcvData);
     }
     if (statuslastcandle === "succeeded") {
       setDohlcvLastCandleData([]);
-      console.log("dlc: ", datalastcandle);
       const dohlcvLastCandle = Object.values(datalastcandle);
       dohlcvLastCandle.forEach((obj) => {
         obj.forEach((element) => {
@@ -71,6 +70,7 @@ const CandleStickCanvas = (props) => {
           ]);
         });
       });
+      console.log("candledatalast: ", dohlcvLastCandleData);
     }
   }, [data, datalastcandle, status, statuslastcandle]);
 
@@ -578,7 +578,7 @@ const CandleStickCanvas = (props) => {
     if (dohlcvData.length > 0 && dohlcvLastCandleData.length > 0) {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
-
+      console.log("draw");
       draw(context);
     }
   });

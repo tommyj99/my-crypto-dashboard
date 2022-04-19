@@ -97,9 +97,9 @@ export default function Home() {
   const [elementNum, setElementNum] = React.useState(0);
 
   React.useEffect(() => {
-    // dispatch(fetchAllCoins());
+    dispatch(fetchAllCoins());
     dispatch(fetchCoinsByMarketCap()); // coin gecko
-    // dispatch(fetchMarkets()); // crytpo watch
+    dispatch(fetchMarkets()); // crytpo watch
   }, []);
   // Called when search bar is being populated
   React.useEffect(() => {
@@ -148,7 +148,6 @@ export default function Home() {
         // set the coin box here for now
         coinsMCapSelect.forEach((item) => {
           if (coinSymbol === item.symbol) {
-            console.log("rank: ", item.market_cap_rank);
             setElementNum(item.market_cap_rank - 1);
           }
         });

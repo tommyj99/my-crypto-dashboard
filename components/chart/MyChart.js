@@ -38,12 +38,12 @@ const MyChart = (props) => {
       {/* <h3>
         {props.coinText}: {props.price}
       </h3> */}
-      {/* <CandleStickCanvas
+      <CandleStickCanvas
         data={ohlcDataSelector}
         status={ohlcStatusSelector}
         datalastcandle={ohlcModifiableDataSelector}
         statuslastcandle={ohlcModifiableStatusSelector}
-      /> */}
+      />
       {/* <Button onClick={props.handleModalClick1}>Show Full Chart</Button>
       <Button onClick={props.handleModalClick2}>Add to Portfolio</Button>
       <Button onClick={props.handleModalClick3}>Exit</Button> */}
