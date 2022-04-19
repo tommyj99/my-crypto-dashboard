@@ -78,4 +78,4 @@ const CoinList = () => {
   }
 };
 
-export default CoinList;
+export default React.memo(CoinList);

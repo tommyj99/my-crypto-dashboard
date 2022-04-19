@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { convertUnixToDate } from "../timeUtils/timeUtils";
+import { convertUnixToDate } from "../../timeUtils/timeUtils";
 // props.data format [{date: null, open: null, close: null, high: null, low: null, volume: null}]
 const CandleStickCanvas = (props) => {
   const { data, status, datalastcandle, statuslastcandle } = props;
@@ -23,6 +23,7 @@ const CandleStickCanvas = (props) => {
   React.useEffect(() => {
     if (status === "succeeded") {
       setDohlcvData([]);
+      console.log("data: ", data);
       const dohlcv = Object.values(data);
       dohlcv.forEach((obj) => {
         obj.forEach((element) => {
@@ -46,6 +47,7 @@ const CandleStickCanvas = (props) => {
     }
     if (statuslastcandle === "succeeded") {
       setDohlcvLastCandleData([]);
+      console.log("dlc: ", datalastcandle);
       const dohlcvLastCandle = Object.values(datalastcandle);
       dohlcvLastCandle.forEach((obj) => {
         obj.forEach((element) => {

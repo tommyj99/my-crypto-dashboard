@@ -8,7 +8,7 @@ export const selectCoinsMCap = (state) => state.coinsByMarketCap.coinsMCap;
 export const selectCoinsMCapStatus = (state) => state.coinsByMarketCap.status;
 export const selectCoinsMCapError = (state) => state.coinsByMarketCap.error;
 
-// coinSlice selectors
+// simplePriceSlice selectors
 export const selectCoin = (state) => state.coin.coin;
 export const selectCoinStatus = (state) => state.coin.status;
 export const selectCoinError = (state) => state.coin.error;

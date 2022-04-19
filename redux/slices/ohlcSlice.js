@@ -15,7 +15,7 @@ export const fetchOhlcData = createAsyncThunk(
       `api/ohlc?coin=${coin}&starttime=${startTime}&endtime=${endTime}&period=${period}&exchange=${exchange}`
       //`/markets/${exchange}/${coin}/ohlc?before=${endTime}&after=${startTime}&periods=${period}`
     );
-    return res.data.result;
+    return res.data;
   }
 );
 

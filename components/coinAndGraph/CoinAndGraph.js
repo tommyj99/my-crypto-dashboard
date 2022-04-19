@@ -1,61 +1,65 @@
 import { Box, Paper, Typography } from "@mui/material";
-import {
-  selectCoinStatus,
-  selectOhlcData,
-  selectOhlcStatus,
-  selectOhlcModifiableData,
-  selectOhlcModifiableStatus,
-} from "../../redux/selectors";
+import { selectCoinStatus, selectCoinsMCap } from "../../redux/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCoin } from "../../redux/slices/simplePriceSlice";
 import React from "react";
 import { unixStartAndEndTimes } from "../../timeUtils/timeUtils";
+import MyChart from "../chart/MyChart";
 import { fetchOhlcData } from "../../redux/slices/ohlcSlice";
 import { fetchOhlcModifiableData } from "../../redux/slices/ohlcModifiableSlice";
 
-const CoinAndGraph = () => {
+const CoinAndGraph = (props) => {
   const dispatch = useDispatch();
   const coinStatusSelector = useSelector(selectCoinStatus);
-  const ohlcDataSelector = useSelector(selectOhlcData);
-  const ohlcStatusSelector = useSelector(selectOhlcStatus);
-  const ohlcModifiableDataSelector = useSelector(selectOhlcModifiableData);
-  const ohlcModifiableStatusSelector = useSelector(selectOhlcModifiableStatus);
-  const style = {
-    //position: "relative",
-    // top: "0%",
-    // left: "0%",
-    minWidth: "100%",
-    minHeight: "100%",
-    bgcolor: "background.paper",
-    border: "1px solid #000",
+  const coinsMCapSelect = useSelector(selectCoinsMCap);
+  const [coinPair, setCoinPair] = React.useState("btcusd");
+  const [exchange, setExchange] = React.useState("coinbase-pro");
+  const [coinImage, setCoinImage] = React.useState(null);
+  const [coinName, setCoinName] = React.useState(null);
+  const [coinRank, setCoinRank] = React.useState(null);
+  const [coinPrice, setCoinPrice] = React.useState(null);
+  const [coinLow, setCoinLow] = React.useState(null);
+  const [coinHigh, setCoinHigh] = React.useState(null);
+  const [coinChange24h, setCoinChange24h] = React.useState(null);
 
-    // pt: 2,
-    // px: 4,
-    // pb: 3,
-  };
+  const cryptoBox = React.useCallback(() => {
+    setCoinImage(coinsMCapSelect[props.elementNum].image);
+    setCoinName(coinsMCapSelect[props.elementNum].name);
+    setCoinRank(coinsMCapSelect[props.elementNum].market_cap_rank);
+    setCoinPrice(coinsMCapSelect[props.elementNum].current_price);
+    setCoinLow(coinsMCapSelect[props.elementNum].low_24h);
+    setCoinHigh(coinsMCapSelect[props.elementNum].high24h);
+    setCoinChange24h(coinsMCapSelect[props.elementNum].price_change_24h);
+  });
 
-  if (coinStatusSelector === "idle") {
-    const coinObj = {
-      exchange: "coinbase-pro",
-      coinPair: "btcusd",
-    };
-    dispatch(fetchCoin(coinObj));
-  }
+  React.useEffect(() => {
+    cryptoBox();
+  }, [cryptoBox]);
+
+  React.useEffect(() => {
+    if (coinStatusSelector === "idle") {
+      const coinObj = {
+        exchange: exchange,
+        coinPair: coinPair,
+      };
+      dispatch(fetchCoin(coinObj));
+    }
+  }, []);
 
   const chartInputObject = {
-    coin: "btcusd",
+    coin: coinPair,
     startTime: unixStartAndEndTimes(new Date()).startTime,
     endTime: unixStartAndEndTimes(new Date()).endTime,
     period: 3600,
-    exchange: "coinbase-pro",
+    exchange: exchange,
   };
 
   const chartInputObectLastCandle = {
-    coin: "btcusd",
+    coin: coinPair,
     startTime: unixStartAndEndTimes(new Date()).startTime,
     endTime: unixStartAndEndTimes(new Date()).endTime,
     period: 60,
-    exchange: "coinbase-pro",
+    exchange: exchange,
   };
 
   return (
@@ -63,39 +67,46 @@ const CoinAndGraph = () => {
       sx={{
         display: "flex",
         height: "65vh",
+        width: "100%",
       }}
     >
-      <Box sx={{ width: "30vw" }}>
+      <Box sx={{ minWidth: "30vw" }}>
         <Paper
           style={{
             height: "100%",
+            paddingLeft: "20px",
           }}
         >
-          <Typography>{}</Typography>
+          <img src={coinImage}></img>
+          <Typography>{coinName}</Typography>
+          <Typography>Rank: {coinRank}</Typography>
+          <Typography>Price: {coinPrice}</Typography>
+          <Typography>24 hr low: {coinLow}</Typography>
+          <Typography>24 hr high: {coinHigh}</Typography>
+          <Typography>24 hr price change: {coinChange24h}</Typography>
         </Paper>
       </Box>
       <Box
         sx={{
-          width: ".5vw",
+          minWidth: ".5vw",
         }}
       />
-      <div style={{ width: "70vw" }}>
+      <Box sx={{ width: "59.5vw" }}>
         <Paper
           style={{
             height: "100%",
           }}
         >
-          {/* <Box sx={{ ...style }}> */}
-          {/* <Chart
-            chartInputObj={chartInputObject}
-            chartInputObjLastCandle={chartInputObectLastCandle}
-          /> */}
+          <MyChart
+            chartInputObject={chartInputObject}
+            chartInputObjectLastCandle={chartInputObectLastCandle}
+          />
           {/* <Button onClick={props.handleModalClick1}>Show Full Chart</Button>
             <Button onClick={props.handleModalClick2}>Add to Portfolio</Button>
             <Button onClick={props.handleModalClick3}>Exit</Button> */}
           {/* </Box> */}
         </Paper>
-      </div>
+      </Box>
     </Box>
   );
 };

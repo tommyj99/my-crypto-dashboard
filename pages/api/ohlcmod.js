@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   const end = req.query.endtime;
   const period = req.query.period;
   const exchange = req.query.exchange;
-  const url = `https://api.cryptowat.ch/markets/${exchange}/${coin}/ohlc?before=${start}&after=${end}&period=${period}&exchange=${exchange}`;
+  const url = `https://api.cryptowat.ch/markets/${exchange}/${coin}/ohlc?before=${end}&after=${start}&period=${period}&exchange=${exchange}`;
   // Run cors
   await cors(req, res);
 
