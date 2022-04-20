@@ -66,24 +66,36 @@ const CoinAndGraph = (props) => {
     <Box
       sx={{
         display: "flex",
-        height: "69vh",
+        height: "65vh",
+        minHeight: "435px",
         width: "100%",
+        backgroundColor: "gray",
       }}
     >
-      <Box sx={{ minWidth: "30vw" }}>
+      <Box
+        sx={{
+          minWidth: "30vw",
+        }}
+      >
         <Paper
           style={{
             height: "100%",
-            paddingLeft: "20px",
+            paddingLeft: "15px",
+            paddingTop: "15px",
+            backgroundColor: "black",
+            marginTop: "2px",
+            borderRadius: "10px",
           }}
         >
           <img src={coinImage}></img>
-          <Typography>{coinName}</Typography>
-          <Typography>Rank: {coinRank}</Typography>
-          <Typography>Price: {coinPrice}</Typography>
-          <Typography>24 hr low: {coinLow}</Typography>
-          <Typography>24 hr high: {coinHigh}</Typography>
-          <Typography>24 hr price change: {coinChange24h}</Typography>
+          <Typography color="white">{coinName}</Typography>
+          <Typography color="white">Rank: {coinRank}</Typography>
+          <Typography color="white">Price: {coinPrice}</Typography>
+          <Typography color="white">24 hr low: {coinLow}</Typography>
+          <Typography color="white">24 hr high: {coinHigh}</Typography>
+          <Typography color="white">
+            24 hr price change: {coinChange24h}
+          </Typography>
         </Paper>
       </Box>
       <Box
@@ -95,6 +107,8 @@ const CoinAndGraph = (props) => {
         <Paper
           style={{
             height: "100%",
+            backgroundColor: "black",
+            borderRadius: "10px",
           }}
         >
           <MyChart

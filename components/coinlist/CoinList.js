@@ -21,7 +21,8 @@ const CoinList = () => {
     return (
       <div
         style={{
-          paddingTop: "15px",
+          paddingTop: "5px",
+          backgroundColor: "gray",
         }}
       >
         <CarouselItem
@@ -61,8 +62,8 @@ const CoinList = () => {
           infinite
           responsive={responsive}
           mouseTracking
-          autoPlayInterval={1500}
-          animationDuration={1000}
+          autoPlayInterval={1000}
+          animationDuration={1500}
           items={items}
           autoPlay
           disableDotsControls

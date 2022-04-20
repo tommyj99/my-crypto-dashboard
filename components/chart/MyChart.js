@@ -32,6 +32,7 @@ const MyChart = (props) => {
         bgcolor: "black",
         marginTop: "2px",
         marginLeft: "2px",
+        borderRadius: "10px",
       }}
     >
       {/* <h3>
