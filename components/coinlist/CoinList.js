@@ -22,6 +22,8 @@ const CoinList = () => {
       <div
         style={{
           paddingTop: "5px",
+          paddingBottom: "5px",
+          paddingRight: "5px",
           backgroundColor: "gray",
         }}
       >

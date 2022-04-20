@@ -14,7 +14,9 @@ const CarouselItem = (props) => {
         minHeight: "160px",
       }}
     >
-      <Typography color="white">{props.coin}</Typography>
+      <Typography variant="h6" color="white">
+        {props.coin}
+      </Typography>
       <div
         style={{
           backgroundColor: "gray",

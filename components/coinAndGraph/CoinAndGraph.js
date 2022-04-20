@@ -70,6 +70,8 @@ const CoinAndGraph = (props) => {
         minHeight: "435px",
         width: "100%",
         backgroundColor: "gray",
+        paddingLeft: "5px",
+        paddingRight: "5px",
       }}
     >
       <Box
@@ -88,13 +90,15 @@ const CoinAndGraph = (props) => {
           }}
         >
           <img src={coinImage}></img>
-          <Typography color="white">{coinName}</Typography>
+          <Typography variant="h6" color="white">
+            {coinName}
+          </Typography>
           <Typography color="white">Rank: {coinRank}</Typography>
           <Typography color="white">Price: {coinPrice}</Typography>
           <Typography color="white">24 hr low: {coinLow}</Typography>
           <Typography color="white">24 hr high: {coinHigh}</Typography>
           <Typography color="white">
-            24 hr price change: {coinChange24h}
+            24 hr price change: {coinChange24h.toFixed(2)}
           </Typography>
         </Paper>
       </Box>
