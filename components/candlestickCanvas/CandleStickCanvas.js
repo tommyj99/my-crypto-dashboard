@@ -43,7 +43,6 @@ const CandleStickCanvas = (props) => {
           setDohlcvData((dohlcvData) => [...dohlcvData, dohlcvDataObj]);
         });
       });
-      console.log("candledata: ", dohlcvData);
     }
     if (statuslastcandle === "succeeded") {
       setDohlcvLastCandleData([]);
@@ -70,7 +69,6 @@ const CandleStickCanvas = (props) => {
           ]);
         });
       });
-      console.log("candledatalast: ", dohlcvLastCandleData);
     }
   }, [data, datalastcandle, status, statuslastcandle]);
 
@@ -574,16 +572,48 @@ const CandleStickCanvas = (props) => {
     ohlcVolumeLast(ctx, 11);
   };
 
+  // (function () {
+  //   window.onresize = displayWindowSize;
+  //   window.onload = displayWindowSize;
+
+  //   function displayWindowSize() {
+  //     let myWidth = window.innerWidth;
+  //     let myHeight = window.innerHeight;
+  //     console.log(myWidth);
+  //     console.log(myHeight);
+  //     if (dohlcvData.length > 0 && dohlcvLastCandleData.length > 0) {
+  //       const canvas = canvasRef.current;
+  //       const context = canvas.getContext("2d");
+  //       canvas.width = 500;
+  //       canvas.height = 375;
+  //       draw(context);
+  //     }
+  //     // your size calculation code here
+  //     // document.getElementById("screen").innerHTML = myWidth + "x" + myHeight;
+  //   }
+  // })();
+
   React.useEffect(() => {
     if (dohlcvData.length > 0 && dohlcvLastCandleData.length > 0) {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
-      console.log("draw");
+      canvas.width = 500;
+      const heightRatio = 0.65;
+      canvas.height = canvas.width * heightRatio;
+
       draw(context);
     }
   });
 
-  return <canvas ref={canvasRef} {...props} />;
+  return (
+    <canvas
+      // style={{
+      //   width: "68.5vw",
+      // }}
+      ref={canvasRef}
+      {...props}
+    />
+  );
 };
 
 // React.useEffect(() => {

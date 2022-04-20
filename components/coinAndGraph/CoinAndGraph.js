@@ -66,7 +66,7 @@ const CoinAndGraph = (props) => {
     <Box
       sx={{
         display: "flex",
-        height: "65vh",
+        height: "69vh",
         width: "100%",
       }}
     >
@@ -91,7 +91,7 @@ const CoinAndGraph = (props) => {
           minWidth: ".5vw",
         }}
       />
-      <Box sx={{ width: "59.5vw" }}>
+      <Box sx={{ width: "69.5vw" }}>
         <Paper
           style={{
             height: "100%",

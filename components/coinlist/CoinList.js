@@ -54,7 +54,7 @@ const CoinList = () => {
     return (
       <div
         style={{
-          height: "20vh",
+          height: "15vh",
         }}
       >
         <AliceCarousel

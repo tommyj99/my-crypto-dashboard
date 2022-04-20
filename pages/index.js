@@ -97,7 +97,7 @@ export default function Home() {
   const [elementNum, setElementNum] = React.useState(0);
 
   React.useEffect(() => {
-    dispatch(fetchAllCoins());
+    //dispatch(fetchAllCoins());
     dispatch(fetchCoinsByMarketCap()); // coin gecko
     dispatch(fetchMarkets()); // crytpo watch
   }, []);
