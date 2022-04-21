@@ -97,7 +97,7 @@ export default function Home() {
   const [elementNum, setElementNum] = React.useState(0);
 
   React.useEffect(() => {
-    //dispatch(fetchAllCoins());
+    dispatch(fetchAllCoins());
     dispatch(fetchCoinsByMarketCap()); // coin gecko
     dispatch(fetchMarkets()); // crytpo watch
   }, []);
@@ -113,16 +113,20 @@ export default function Home() {
     }
   }, [coinSymbol, coinsAllSelector]);
 
-  if (marketsSelector !== undefined && usdFilter === false) {
-    dispatch(filterByUsd(filterUsd()));
-    setUsdFilter(true);
-  }
+  React.useEffect(() => {
+    // console.log("mss: ", marketsStatusSelector);
+    // console.log("usdFilter: ", usdFilter);
+    if (marketsStatusSelector === "succeeded" && usdFilter === false) {
+      dispatch(filterByUsd(filterUsd()));
+      setUsdFilter(true);
+    }
+  }, [marketsStatusSelector]);
 
   function filterUsd() {
     let filteredByUsdPairs = [];
-    marketsSelector.forEach((item) => {
-      if (item.pair.endsWith("usd")) {
-        console.log(item.pair);
+    const unfilteredMarkets = Object.values(marketsSelector);
+    unfilteredMarkets[0].result.forEach((item) => {
+      if (item.pair.endsWith("usd") && item.active === true) {
         filteredByUsdPairs.push(item);
       }
     });
@@ -176,6 +180,7 @@ export default function Home() {
     if (isExchangesSelector && marketsStatusSelector === "succeeded") {
       return <ExchangeMenu coin={coin} />;
     }
+    return null;
   };
   if (coinsMCapSelectStatus === "succeeded") {
     return (
@@ -207,6 +212,7 @@ export default function Home() {
                   My Crypto App
                 </Typography>
                 <ExchangeButton />
+                {/* <ExchangeMenu /> */}
                 <Search hidden={isExchangesSelector} data-testid="search-bar">
                   <SearchIconWrapper aria-label="search-icon">
                     <SearchRoundedIcon />

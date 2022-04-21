@@ -12,7 +12,7 @@ export const fetchAllCoins = createAsyncThunk(
   "coinsAll/fetchAllCoins",
   async () => {
     const res = await axios.get(`api/assets`);
-    return res.data;
+    return res.data.data;
   }
 );
 

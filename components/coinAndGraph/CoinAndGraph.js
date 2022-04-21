@@ -3,7 +3,10 @@ import { selectCoinStatus, selectCoinsMCap } from "../../redux/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCoin } from "../../redux/slices/simplePriceSlice";
 import React from "react";
-import { unixStartAndEndTimes } from "../../timeUtils/timeUtils";
+import {
+  unixStartAndEndTimes,
+  unixStartAndEndTimesLastCandle,
+} from "../../timeUtils/timeUtils";
 import MyChart from "../chart/MyChart";
 import { fetchOhlcData } from "../../redux/slices/ohlcSlice";
 import { fetchOhlcModifiableData } from "../../redux/slices/ohlcModifiableSlice";
@@ -12,7 +15,7 @@ const CoinAndGraph = (props) => {
   const dispatch = useDispatch();
   const coinStatusSelector = useSelector(selectCoinStatus);
   const coinsMCapSelect = useSelector(selectCoinsMCap);
-  const [coinPair, setCoinPair] = React.useState("btcusd");
+  const [coinCurrencyPair, setCoinCurrencyPair] = React.useState("btcusd");
   const [exchange, setExchange] = React.useState("coinbase-pro");
   const [coinImage, setCoinImage] = React.useState(null);
   const [coinName, setCoinName] = React.useState(null);
@@ -21,6 +24,9 @@ const CoinAndGraph = (props) => {
   const [coinLow, setCoinLow] = React.useState(null);
   const [coinHigh, setCoinHigh] = React.useState(null);
   const [coinChange24h, setCoinChange24h] = React.useState(null);
+  // const [chartInputObject, setChartInputObject] = React.useState([]);
+  // const [chartInputObectLastCandle, setChartInputObjectLastCandle] =
+  //   React.useState([]);
 
   const cryptoBox = React.useCallback(() => {
     setCoinImage(coinsMCapSelect[props.elementNum].image);
@@ -32,22 +38,50 @@ const CoinAndGraph = (props) => {
     setCoinChange24h(coinsMCapSelect[props.elementNum].price_change_24h);
   });
 
+  // const buildChartApiInputObject = React.useCallback(() => {
+  //   let startEndHours = {};
+  //   const dateNow = new Date();
+  //   startEndHours = unixStartAndEndTimes(dateNow);
+  //   setChartInputObject({
+  //     coin: coinCurrencyPair,
+  //     startTime: startEndHours.startTime,
+  //     endTime: startEndHours.endTime,
+  //     period: 3600,
+  //     exchange: exchange,
+  //   });
+  // }, []);
+
+  // const buildChartApiInputObjectLastCandle = React.useCallback(() => {
+  //   let startEndHours = {};
+  //   const dateNow = new Date();
+  //   startEndHours = unixStartAndEndTimesLastCandle(dateNow);
+  //   setChartInputObjectLastCandle({
+  //     coin: coinCurrencyPair,
+  //     startTime: startEndHours.startTime,
+  //     endTime: startEndHours.endTime,
+  //     period: 60,
+  //     exchange: exchange,
+  //   });
+  // }, []);
+
   React.useEffect(() => {
     cryptoBox();
+    // buildChartApiInputObject();
+    // buildChartApiInputObjectLastCandle();
   }, [cryptoBox]);
 
   React.useEffect(() => {
     if (coinStatusSelector === "idle") {
       const coinObj = {
         exchange: exchange,
-        coinPair: coinPair,
+        coinCurrrencyPair: coinCurrencyPair,
       };
       dispatch(fetchCoin(coinObj));
     }
   }, []);
 
   const chartInputObject = {
-    coin: coinPair,
+    coin: coinCurrencyPair,
     startTime: unixStartAndEndTimes(new Date()).startTime,
     endTime: unixStartAndEndTimes(new Date()).endTime,
     period: 3600,
@@ -55,9 +89,9 @@ const CoinAndGraph = (props) => {
   };
 
   const chartInputObectLastCandle = {
-    coin: coinPair,
-    startTime: unixStartAndEndTimes(new Date()).startTime,
-    endTime: unixStartAndEndTimes(new Date()).endTime,
+    coin: coinCurrencyPair,
+    startTime: unixStartAndEndTimesLastCandle(new Date()).startTime,
+    endTime: unixStartAndEndTimesLastCandle(new Date()).endTime,
     period: 60,
     exchange: exchange,
   };
@@ -66,7 +100,7 @@ const CoinAndGraph = (props) => {
     <Box
       sx={{
         display: "flex",
-        height: "65vh",
+        height: "62vh",
         minHeight: "435px",
         width: "100%",
         backgroundColor: "gray",
@@ -98,7 +132,7 @@ const CoinAndGraph = (props) => {
           <Typography color="white">24 hr low: {coinLow}</Typography>
           <Typography color="white">24 hr high: {coinHigh}</Typography>
           <Typography color="white">
-            24 hr price change: {coinChange24h.toFixed(2)}
+            24 hr price change: {coinChange24h}
           </Typography>
         </Paper>
       </Box>

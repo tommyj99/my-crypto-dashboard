@@ -177,6 +177,7 @@ const CandleStickCanvas = (props) => {
     setPricePerPixel(priceRange / yPixelRange);
   };
 
+  // need to finish this
   const lastCandleRescale = () => {};
 
   const volumeScaling = () => {
@@ -561,7 +562,7 @@ const CandleStickCanvas = (props) => {
     xAxis(ctx);
     yAxis(ctx);
     lastCandleRescale(); // not working
-    lastVolumeRescale(); // not working
+    lastVolumeRescale();
     candleScaling();
     volumeScaling();
     for (let i = 0; i < dohlcvData.length; i++) {

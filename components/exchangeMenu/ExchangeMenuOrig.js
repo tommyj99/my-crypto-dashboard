@@ -1,13 +1,13 @@
-import {
-  Stack,
-  Button,
-  Paper,
-  Popper,
-  MenuItem,
-  MenuList,
-} from "@mui/material";
+import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import React from "react";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Stack from "@mui/material/Stack";
 import { ArrowDropDownCircleSharp } from "@mui/icons-material/SearchRounded";
 import {
   selectFilteredByUsd,
@@ -15,7 +15,13 @@ import {
   selectCoin,
   selectCurrentExchange,
 } from "../../redux/selectors";
-import { useDispatch, useSelector } from "react-redux";
+import { fetchCoin } from "../../redux/slices/simplePriceSlice";
+import {
+  unixStartAndEndTimes,
+  unixStartAndEndTimesLastCandle,
+} from "../../timeUtils/timeUtils";
+import { saveExchange, isExchanges } from "../../redux/slices/marketsSlice";
+import { useNavigate } from "react-router-dom";
 
 const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
@@ -35,12 +41,40 @@ const ExchangeMenu = (props) => {
   //const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const buildChartApiInputObject = React.useCallback(() => {
+    let startEndHours = {};
+    const dateNow = new Date();
+    startEndHours = unixStartAndEndTimes(dateNow);
+    setChartInputObject({
+      coin: coinCurrencyPair,
+      startTime: startEndHours.startTime,
+      endTime: startEndHours.endTime,
+      period: 3600,
+      exchange: currentExchangeSelector,
+    });
+  }, [coinCurrencyPair, currentExchangeSelector]);
+
+  const buildChartApiInputObjectLastCandle = React.useCallback(() => {
+    let startEndHours = {};
+    const dateNow = new Date();
+    startEndHours = unixStartAndEndTimesLastCandle(dateNow);
+    setChartInputObjectLastCandle({
+      coin: coinCurrencyPair,
+      startTime: startEndHours.startTime,
+      endTime: startEndHours.endTime,
+      period: 60,
+      exchange: currentExchangeSelector,
+    });
+  }, [coinCurrencyPair, currentExchangeSelector]);
+
   const exchangeAutoClick = React.useCallback(() => {
     anchorRef.current.click();
   }, [anchorRef]);
 
   React.useEffect(() => {
+    console.log("useEffect");
     if (coinStatusSelector === "idle") {
+      console.log("idle coin status");
       exchangeAutoClick();
     }
   }, [exchangeAutoClick, coinStatusSelector]);
@@ -48,17 +82,19 @@ const ExchangeMenu = (props) => {
   React.useEffect(() => {
     if (coinStatusSelector === "succeeded") {
       setPrice(coinSelector.price);
-      // buildChartApiInputObject();
-      // buildChartApiInputObjectLastCandle();
+      buildChartApiInputObject();
+      buildChartApiInputObjectLastCandle();
       setOpen(false);
       setAnchorEl(null);
       setOpenModal(true);
+    } else {
+      console.log("no bueno");
     }
   }, [
     coinStatusSelector,
     coinSelector,
-    // buildChartApiInputObject,
-    // buildChartApiInputObjectLastCandle,
+    buildChartApiInputObject,
+    buildChartApiInputObjectLastCandle,
   ]);
 
   const handleExchangePopperClick = (Event) => {
@@ -77,6 +113,26 @@ const ExchangeMenu = (props) => {
     setAnchorEl(Event.currentTarget);
   };
 
+  const handleModalClick1 = () => {
+    setOpenModal(false);
+    dispatch(isExchanges(false));
+    navigate("/chart");
+  };
+
+  const handleModalClick2 = () => {
+    setOpenModal(false);
+    dispatch(isExchanges(false));
+    navigate("/portfolio");
+  };
+
+  const handleModalClick3 = () => {
+    setOpenModal(false);
+    dispatch(isExchanges(false));
+  };
+
+  // this is only called when open is set false
+  const handleModalClose = () => setOpenModal(false);
+
   function handleClickAway() {
     setOpen(false);
     setAnchorEl(null);
@@ -88,15 +144,15 @@ const ExchangeMenu = (props) => {
         <Button
           name="exchange"
           id="exchange-button"
-          // onClick={handleExchangeButtonClick}
+          onClick={handleExchangeButtonClick}
           ref={anchorRef}
           variant="contained"
-          // endIcon={<ArrowDropDownCircleSharp />}
+          endIcon={<ArrowDropDownCircleSharp />}
         >
           Choose Exchange
         </Button>
         <Popper
-          open={true}
+          open={open}
           anchorEl={anchorEl}
           role={undefined}
           placement="bottom-end"
@@ -109,9 +165,8 @@ const ExchangeMenu = (props) => {
                 aria-labelledby="exchange-button"
                 // onKeyDown={handleListKeyDown}
               >
-                {markets[0].result.map((item, index) => {
-                  if (item.pair === coinCurrencyPair) {
-                    console.log(item.exchange);
+                {markets.map((item, index) => {
+                  if (item.pair === coinCurrencyPair && item.active === true) {
                     return (
                       <MenuItem key={index} onClick={handleExchangePopperClick}>
                         {item.exchange}
@@ -121,20 +176,29 @@ const ExchangeMenu = (props) => {
                   return null;
                 })}
               </MenuList>
-              {/* <MenuList
-                // autoFocusItem={open}
-                id="composition-menu"
-                aria-labelledby="exchange-button"
-                // onKeyDown={handleListKeyDown}
-              >
-                <MenuItem>Hi</MenuItem>
-              </MenuList> */}
             </ClickAwayListener>
           </Paper>
+
+          {/* </Grow>
+          )} */}
         </Popper>
+        {/* <Box>
+          <CoinAndGraph /> */}
+        {/* <Chart
+            // handleModalClick1={handleModalClick1}
+            // handleModalClick2={handleModalClick2}
+            // handleModalClick3={handleModalClick3}
+            // openModal={openModal}
+            // handleModalClose={handleModalClose}
+            // coinText={props.coin.toUpperCase()}
+            // price={price}
+            chartInputObj={chartInputObject}
+            chartInputObjLastCandle={chartInputObectLastCandle}
+          /> */}
+        {/* </Box> */}
       </div>
     </Stack>
   );
 };
 
-export default ExchangeMenu;
+// export default ExchangeMenu;

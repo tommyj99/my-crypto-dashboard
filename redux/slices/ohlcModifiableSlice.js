@@ -11,7 +11,6 @@ export const fetchOhlcModifiableData = createAsyncThunk(
   "ohlcModifiable/fetchOhlcDataModifiable",
   async (chartInputModObj) => {
     const { coin, startTime, endTime, period, exchange } = chartInputModObj;
-    console.log("periodOhlcMod: ", period);
     const res = await axios.get(
       `api/ohlcmod?coin=${coin}&starttime=${startTime}&endtime=${endTime}&period=${period}&exchange=${exchange}`
       // `/markets/${exchange}/${coin}/ohlc?before=${endTime}&after=${startTime}&periods=${period}`

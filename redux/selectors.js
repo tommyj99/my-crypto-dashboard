@@ -1,5 +1,5 @@
 // coinsAllSlice selectors
-export const selectCoinsAll = (state) => state.coinsAll.coinsAll;
+export const selectCoinsAll = (state) => state.coinsAll.coinsAll.result;
 export const selectCoinsAllStatus = (state) => state.coinsAll.status;
 export const selectCoinsAllError = (state) => state.coinsAll.error;
 
@@ -20,7 +20,7 @@ export const selectChartStatus = (state) => state.chartData.status;
 export const selectChartError = (state) => state.chartData.error;
 
 // markets selectors
-export const selectMarketsData = (state) => state.markets.markets.result;
+export const selectMarketsData = (state) => state.markets.markets;
 export const selectMarketsStatus = (state) => state.markets.status;
 export const selectMarketsError = (state) => state.markets.error;
 export const selectFilteredByUsd = (state) => state.markets.markets;
