@@ -161,6 +161,7 @@ export default function Home() {
   }
 
   function handleClick(Event) {
+    setOpen(false);
     dispatch(isExchanges(true));
     dispatch(coinClear());
     if (Event.currentTarget.innerText !== undefined) {

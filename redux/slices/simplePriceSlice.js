@@ -9,9 +9,11 @@ const initialState = {
 export const fetchCoin = createAsyncThunk(
   "coin/fetchCoin",
   async (priceObj) => {
-    const { exchange, coinPair } = priceObj;
-    const res = await axios.get(`/markets/${exchange}/${coinPair}/price`);
-    return res.data.result;
+    const { exchange, coinCurrencyPair } = priceObj;
+    const res = await axios.get(
+      `api/coin?exchange=${exchange}&coinCurrencyPair=${coinCurrencyPair}`
+    );
+    return res.data;
   }
 );
 

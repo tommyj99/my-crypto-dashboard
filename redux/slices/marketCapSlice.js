@@ -23,6 +23,7 @@ export const marketCapSlice = createSlice({
   initialState,
   reducers: {
     updateCoinsMcapState: (state, action) => {
+      // for test
       Object.assign(state, action.payload);
     },
   },

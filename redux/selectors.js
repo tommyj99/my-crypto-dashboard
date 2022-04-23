@@ -9,7 +9,7 @@ export const selectCoinsMCapStatus = (state) => state.coinsByMarketCap.status;
 export const selectCoinsMCapError = (state) => state.coinsByMarketCap.error;
 
 // simplePriceSlice selectors
-export const selectCoin = (state) => state.coin.coin;
+export const selectCoin = (state) => state.coin.coin.data;
 export const selectCoinStatus = (state) => state.coin.status;
 export const selectCoinError = (state) => state.coin.error;
 export const selectAggregatePrice = (state) => state.coin.coin.aggregatorPrice;
@@ -41,3 +41,12 @@ export const selectOhlcModifiableData = (state) =>
 export const selectOhlcModifiableStatus = (state) =>
   state.ohlcModifiable.status;
 export const selectOhlcModifiableError = (state) => state.ohlcModifiable.error;
+
+//buildChart selectors
+export const selectBuildChart = (state) => state.buildChart.chartObj;
+export const selectBuildChartStatus = (state) => state.buildChart.status;
+//buildChartLastCandle selectors
+export const selectBuildChartLastCandle = (state) =>
+  state.buildChartLastCandle.chartObj;
+export const selectBuildChartStatusLastCandle = (state) =>
+  state.buildChartLastCandle.status;

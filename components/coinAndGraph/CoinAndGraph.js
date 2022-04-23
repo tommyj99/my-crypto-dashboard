@@ -74,7 +74,7 @@ const CoinAndGraph = (props) => {
     if (coinStatusSelector === "idle") {
       const coinObj = {
         exchange: exchange,
-        coinCurrrencyPair: coinCurrencyPair,
+        coinCurrencyPair: coinCurrencyPair,
       };
       dispatch(fetchCoin(coinObj));
     }

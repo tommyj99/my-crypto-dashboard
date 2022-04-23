@@ -22,6 +22,7 @@ export const marketsSlice = createSlice({
   initialState,
   reducers: {
     updateMarketsState: (state, action) => {
+      // for test
       Object.assign(state, action.payload);
     },
     filterByUsd: (state, action) => {
