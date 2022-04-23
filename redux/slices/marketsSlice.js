@@ -3,7 +3,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   markets: [],
-  currentExchange: null,
+  coinAndExchange: {},
+  coinAndExchangeStatus: false,
   isExchanges: false,
   status: "idle",
   error: "none",
@@ -28,8 +29,9 @@ export const marketsSlice = createSlice({
     filterByUsd: (state, action) => {
       state.markets = action.payload;
     },
-    saveExchange: (state, action) => {
-      state.currentExchange = action.payload;
+    saveCoinAndExchange: (state, action) => {
+      state.coinAndExchange = action.payload;
+      state.coinAndExchangeStatus = true;
     },
     isExchanges: (state, action) => {
       state.isExchanges = action.payload;
@@ -51,6 +53,10 @@ export const marketsSlice = createSlice({
   },
 });
 
-export const { filterByUsd, updateMarketsState, saveExchange, isExchanges } =
-  marketsSlice.actions;
+export const {
+  filterByUsd,
+  updateMarketsState,
+  saveCoinAndExchange,
+  isExchanges,
+} = marketsSlice.actions;
 export default marketsSlice.reducer;

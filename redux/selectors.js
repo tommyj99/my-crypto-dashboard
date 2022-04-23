@@ -13,6 +13,7 @@ export const selectCoin = (state) => state.coin.coin.data;
 export const selectCoinStatus = (state) => state.coin.status;
 export const selectCoinError = (state) => state.coin.error;
 export const selectAggregatePrice = (state) => state.coin.coin.aggregatorPrice;
+export const selectIsCoinChange = (state) => state.coin.isCoinChange;
 
 // chartData selectors
 export const selectChartData = (state) => state.chartData.chartData;
@@ -24,7 +25,9 @@ export const selectMarketsData = (state) => state.markets.markets;
 export const selectMarketsStatus = (state) => state.markets.status;
 export const selectMarketsError = (state) => state.markets.error;
 export const selectFilteredByUsd = (state) => state.markets.markets;
-export const selectCurrentExchange = (state) => state.markets.currentExchange;
+export const selectCoinAndExchange = (state) => state.markets.coinAndExchange;
+export const selectCoinAndExchangeStatus = (state) =>
+  state.markets.coinAndExchangeStatus;
 export const selectIsExchanges = (state) => state.markets.isExchanges;
 
 // counter selector

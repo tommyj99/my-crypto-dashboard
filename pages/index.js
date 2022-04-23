@@ -23,6 +23,10 @@ import {
   selectIsExchanges,
   selectCoinsMCapStatus,
   selectCoinsMCap,
+  selectCoinAndExchangeStatus,
+  // selectBuildChartStatus,
+  // selectBuildChartStatusLastCandle,
+  // selectCurrentCoinAndExchange,
 } from "../redux/selectors";
 import SearchItem from "../components/searchItem/SearchItem";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -87,6 +91,8 @@ export default function Home() {
   const isExchangesSelector = useSelector(selectIsExchanges);
   const coinsMCapSelectStatus = useSelector(selectCoinsMCapStatus);
   const coinsMCapSelect = useSelector(selectCoinsMCap);
+
+  const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
   // hooks
   const [coinSymbol, setCoinSymbol] = React.useState("");
   const [coinList, setCoinList] = React.useState([]);
@@ -96,12 +102,45 @@ export default function Home() {
   const [coin, setCoin] = React.useState("");
   const [elementNum, setElementNum] = React.useState(0);
 
+  // React.useEffect(() => {
+  //   console.log("coinChangeStatus: ", coinAndExchangeStatusSelect);
+  //   if (!coinAndExchangeStatusSelect) {
+  //     dispatch(fetchAllCoins());
+  //     dispatch(fetchCoinsByMarketCap()); // coin gecko
+  //     dispatch(fetchMarkets()); // crytpo watch
+  //   }
+  //   if (coinSymbol !== "") {
+  //     coinsAllSelector.forEach((result) => {
+  //       if (result.symbol.toLowerCase().startsWith(coinSymbol.toLowerCase())) {
+  //         // populate symbol list
+  //         setCoinList((prevArray) => [...prevArray, result.symbol]);
+  //       }
+  //     });
+  //   }
+  //   if (marketsStatusSelector === "succeeded" && usdFilter === false) {
+  //     dispatch(filterByUsd(filterUsd()));
+  //     setUsdFilter(true);
+  //   }
+  // }, [
+  //   coinAndExchangeStatusSelect,
+  //   coinSymbol,
+  //   coinsAllSelector,
+  //   marketsStatusSelector,
+  // ]);
+
+  // dispatch(fetchAllCoins());
+  // dispatch(fetchCoinsByMarketCap()); // coin gecko
+  // dispatch(fetchMarkets()); // crytpo watch
+
   React.useEffect(() => {
-    dispatch(fetchAllCoins());
-    dispatch(fetchCoinsByMarketCap()); // coin gecko
-    dispatch(fetchMarkets()); // crytpo watch
-  }, []);
-  // Called when search bar is being populated
+    console.log("coinChangeStatus: ", coinAndExchangeStatusSelect);
+    if (!coinAndExchangeStatusSelect) {
+      dispatch(fetchAllCoins());
+      dispatch(fetchCoinsByMarketCap()); // coin gecko
+      dispatch(fetchMarkets()); // crytpo watch
+    }
+  }, [coinAndExchangeStatusSelect]);
+  //Called when search bar is being populated
   React.useEffect(() => {
     if (coinSymbol !== "") {
       coinsAllSelector.forEach((result) => {
@@ -166,6 +205,11 @@ export default function Home() {
     dispatch(coinClear());
     if (Event.currentTarget.innerText !== undefined) {
       setCoin(Event.currentTarget.innerText);
+      coinsMCapSelect.forEach((item) => {
+        if (coinSymbol === item.symbol) {
+          setElementNum(item.market_cap_rank - 1);
+        }
+      });
     }
   }
 

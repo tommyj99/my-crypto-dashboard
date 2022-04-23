@@ -4,12 +4,13 @@ export const buildChartSlice = createSlice({
   name: "buildChart",
   initialState: {
     chartObj: {},
-    status: "incomplete",
+    status: "idle",
+    error: "none",
   },
   reducers: {
     buildChart: (state, action) => {
       Object.assign(state, action.payload);
-      state.status = "complete";
+      state.status = "succeeded";
     },
   },
 });

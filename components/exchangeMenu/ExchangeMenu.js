@@ -13,31 +13,20 @@ import {
   selectFilteredByUsd,
   selectCoinStatus,
   selectCoin,
-  selectCurrentExchange,
+  selectCoinAndExchange,
 } from "../../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import { buildChart } from "../../redux/slices/buildChartSlice";
-import { buildChartLastCandle } from "../../redux/slices/buildChartLastCandleSlice";
-import { fetchCoin } from "../../redux/slices/simplePriceSlice";
-import { saveExchange } from "../../redux/slices/marketsSlice";
-import { unixStartAndEndTimes } from "../../timeUtils/timeUtils";
-import { unixStartAndEndTimesLastCandle } from "../../timeUtils/timeUtils";
+import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
 
 const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
   const coinStatusSelector = useSelector(selectCoinStatus);
-  const coinSelector = useSelector(selectCoin);
-  const currentExchangeSelector = useSelector(selectCurrentExchange);
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const anchorRef = React.useRef("exchange");
   const coinCurrencyPair = props.coin + "usd";
   const markets = Object.values(usdPairsSelector);
   const [price, setPrice] = React.useState("");
-  // const [chartInputObject, setChartInputObject] = React.useState([]);
-  // const [chartInputObectLastCandle, setChartInputObjectLastCandle] =
-  React.useState([]);
-  //const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const exchangeAutoClick = React.useCallback(() => {
@@ -50,57 +39,60 @@ const ExchangeMenu = (props) => {
     }
   }, [exchangeAutoClick, coinStatusSelector]);
 
-  React.useEffect(() => {
-    if (coinStatusSelector === "succeeded") {
-      setPrice(coinSelector.result.price);
-      dispatch(buildChart(buildChartApiInputObject()));
-      dispatch(buildChartLastCandle(buildChartApiInputObjectLastCandle()));
-      setOpen(false);
-      setAnchorEl(null);
-    }
-  }, [
-    coinStatusSelector,
-    coinSelector,
-    // buildChartApiInputObject,
-    // buildChartApiInputObjectLastCandle,
-  ]);
+  // React.useEffect(() => {
+  //   if (coinStatusSelector === "succeeded") {
+  //     console.log("set coin change boolean");
+  //     setPrice(coinSelector.result.price);
+  //     // dispatch(isCoinChange(true));
+  //     // dispatch(buildChart(buildChartApiInputObject()));
+  //     // dispatch(buildChartLastCandle(buildChartApiInputObjectLastCandle()));
+  //     setOpen(false);
+  //     setAnchorEl(null);
+  //   }
+  // }, [
+  //   coinStatusSelector,
+  //   coinSelector,
+  //   // buildChartApiInputObject,
+  //   // buildChartApiInputObjectLastCandle,
+  // ]);
 
-  function buildChartApiInputObject() {
-    let startEndHours = {};
-    const dateNow = new Date();
-    startEndHours = unixStartAndEndTimes(dateNow);
-    return {
-      coin: coinCurrencyPair,
-      startTime: startEndHours.startTime,
-      endTime: startEndHours.endTime,
-      period: 3600,
-      exchange: currentExchangeSelector,
-    };
-  }
+  // function buildChartApiInputObject() {
+  //   let startEndHours = {};
+  //   const dateNow = new Date();
+  //   startEndHours = unixStartAndEndTimes(dateNow);
+  //   return {
+  //     coin: coinCurrencyPair,
+  //     startTime: startEndHours.startTime,
+  //     endTime: startEndHours.endTime,
+  //     period: 3600,
+  //     exchange: currentExchangeSelector,
+  //   };
+  // }
 
-  function buildChartApiInputObjectLastCandle() {
-    let startEndHours = {};
-    const dateNow = new Date();
-    startEndHours = unixStartAndEndTimesLastCandle(dateNow);
-    return {
-      coin: coinCurrencyPair,
-      startTime: startEndHours.startTime,
-      endTime: startEndHours.endTime,
-      period: 60,
-      exchange: currentExchangeSelector,
-    };
-  }
+  // function buildChartApiInputObjectLastCandle() {
+  //   let startEndHours = {};
+  //   const dateNow = new Date();
+  //   startEndHours = unixStartAndEndTimesLastCandle(dateNow);
+  //   return {
+  //     coin: coinCurrencyPair,
+  //     startTime: startEndHours.startTime,
+  //     endTime: startEndHours.endTime,
+  //     period: 60,
+  //     exchange: currentExchangeSelector,
+  //   };
+  // }
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {
-      const coinObj = {
-        exchange: Event.currentTarget.innerText,
-        coinCurrencyPair: props.coin + "usd",
-      };
-      // dispatch(buildChart(buildChartApiInputObject()));
-      // dispatch(buildChartLastCandle(buildChartApiInputObjectLastCandle()));
-      dispatch(fetchCoin(coinObj));
-      dispatch(saveExchange(Event.currentTarget.innerText));
+      function coinObj() {
+        return (coinObj = {
+          exchange: Event.currentTarget.innerText,
+          coinCurrencyPair: props.coin + "usd",
+        });
+      }
+      setOpen(false);
+      setAnchorEl(null);
+      dispatch(saveCoinAndExchange(coinObj()));
     }
   };
 
@@ -113,7 +105,7 @@ const ExchangeMenu = (props) => {
     setOpen(false);
     setAnchorEl(null);
   }
-  console.log("open: ", open);
+
   return (
     <Stack direction="row" spacing={2}>
       <div>
@@ -123,7 +115,7 @@ const ExchangeMenu = (props) => {
           onClick={handleExchangeButtonClick}
           ref={anchorRef}
           variant="contained"
-          // endIcon={<ArrowDropDownCircle />}
+          //endIcon={}
         >
           Choose Exchange
         </Button>

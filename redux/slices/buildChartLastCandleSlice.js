@@ -4,11 +4,13 @@ export const buildChartLastCandleSlice = createSlice({
   name: "buildChartLastCandle",
   initialState: {
     chartObjLastCandle: {},
-    status: "incomplete",
+    status: "idle",
+    error: "none",
   },
   reducers: {
     buildChartLastCandle: (state, action) => {
       Object.assign(state, action.payload);
+      state.status = "succeeded";
     },
   },
 });

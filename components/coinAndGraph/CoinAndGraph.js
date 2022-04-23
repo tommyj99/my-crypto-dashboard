@@ -1,5 +1,10 @@
 import { Box, Paper, Typography } from "@mui/material";
-import { selectCoinStatus, selectCoinsMCap } from "../../redux/selectors";
+import {
+  selectCoinStatus,
+  selectCoinsMCap,
+  selectCoinAndExchange,
+  selectCoinAndExchangeStatus,
+} from "../../redux/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCoin } from "../../redux/slices/simplePriceSlice";
 import React from "react";
@@ -15,6 +20,8 @@ const CoinAndGraph = (props) => {
   const dispatch = useDispatch();
   const coinStatusSelector = useSelector(selectCoinStatus);
   const coinsMCapSelect = useSelector(selectCoinsMCap);
+  const coinAndExchangeSelect = useSelector(selectCoinAndExchange);
+  const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
   const [coinCurrencyPair, setCoinCurrencyPair] = React.useState("btcusd");
   const [exchange, setExchange] = React.useState("coinbase-pro");
   const [coinImage, setCoinImage] = React.useState(null);
@@ -36,6 +43,10 @@ const CoinAndGraph = (props) => {
     setCoinLow(coinsMCapSelect[props.elementNum].low_24h);
     setCoinHigh(coinsMCapSelect[props.elementNum].high_24h);
     setCoinChange24h(coinsMCapSelect[props.elementNum].price_change_24h);
+    if (coinAndExchangeStatusSelect) {
+      setCoinCurrencyPair(coinAndExchangeSelect.coinCurrencyPair);
+      setExchange(coinAndExchangeSelect.exchange);
+    }
   });
 
   // const buildChartApiInputObject = React.useCallback(() => {
@@ -70,15 +81,15 @@ const CoinAndGraph = (props) => {
     // buildChartApiInputObjectLastCandle();
   }, [cryptoBox]);
 
-  React.useEffect(() => {
-    if (coinStatusSelector === "idle") {
-      const coinObj = {
-        exchange: exchange,
-        coinCurrencyPair: coinCurrencyPair,
-      };
-      dispatch(fetchCoin(coinObj));
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (coinStatusSelector === "idle") {
+  //     const coinObj = {
+  //       exchange: exchange,
+  //       coinCurrencyPair: coinCurrencyPair,
+  //     };
+  //     dispatch(fetchCoin(coinObj));
+  //   }
+  // }, []);
 
   const chartInputObject = {
     coin: coinCurrencyPair,
