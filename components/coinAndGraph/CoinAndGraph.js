@@ -44,6 +44,7 @@ const CoinAndGraph = (props) => {
     setCoinHigh(coinsMCapSelect[props.elementNum].high_24h);
     setCoinChange24h(coinsMCapSelect[props.elementNum].price_change_24h);
     if (coinAndExchangeStatusSelect) {
+      console.log("set new coin obj");
       setCoinCurrencyPair(coinAndExchangeSelect.coinCurrencyPair);
       setExchange(coinAndExchangeSelect.exchange);
     }

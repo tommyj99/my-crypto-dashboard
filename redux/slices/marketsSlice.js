@@ -33,6 +33,9 @@ export const marketsSlice = createSlice({
       state.coinAndExchange = action.payload;
       state.coinAndExchangeStatus = true;
     },
+    setCoinAndExchangeStatus: (state, action) => {
+      state.coinAndExchangeStatus = action.payload;
+    },
     isExchanges: (state, action) => {
       state.isExchanges = action.payload;
     },
