@@ -16,7 +16,8 @@ import {
 } from "../../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
-
+import { isExchanges } from "../../redux/slices/marketsSlice";
+import { setCoinAndExchangeStatus } from "../../redux/slices/marketsSlice";
 const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
   const coinStatusSelector = useSelector(selectCoinStatus);
@@ -48,6 +49,7 @@ const ExchangeMenu = (props) => {
         });
       }
       dispatch(saveCoinAndExchange(coinObj()));
+      //dispatch(setCoinAndExchangeStatus(false));
     }
     setOpen(false);
     setAnchorEl(null);
@@ -58,7 +60,13 @@ const ExchangeMenu = (props) => {
     setAnchorEl(Event.currentTarget);
   };
 
-  console.log("open: ", open);
+  const handleNewSearchClick = (Event) => {
+    dispatch(isExchanges(false));
+    dispatch(setCoinAndExchangeStatus(false));
+    setOpen(false);
+    setAnchorEl(null);
+  };
+
   function handleClickAway() {
     setOpen(false);
     setAnchorEl(null);
@@ -101,6 +109,9 @@ const ExchangeMenu = (props) => {
                   }
                   return null;
                 })}
+                <MenuItem onClick={handleNewSearchClick}>
+                  Search new coin
+                </MenuItem>
               </MenuList>
             </ClickAwayListener>
           </Paper>

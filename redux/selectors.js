@@ -44,12 +44,3 @@ export const selectOhlcModifiableData = (state) =>
 export const selectOhlcModifiableStatus = (state) =>
   state.ohlcModifiable.status;
 export const selectOhlcModifiableError = (state) => state.ohlcModifiable.error;
-
-//buildChart selectors
-export const selectBuildChart = (state) => state.buildChart.chartObj;
-export const selectBuildChartStatus = (state) => state.buildChart.status;
-//buildChartLastCandle selectors
-export const selectBuildChartLastCandle = (state) =>
-  state.buildChartLastCandle.chartObj;
-export const selectBuildChartStatusLastCandle = (state) =>
-  state.buildChartLastCandle.status;

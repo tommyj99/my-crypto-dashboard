@@ -2,6 +2,8 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+let count = 0;
+
 const initialState = {
   coinsAll: [],
   status: "idle",
@@ -12,6 +14,7 @@ export const fetchAllCoins = createAsyncThunk(
   "coinsAll/fetchAllCoins",
   async () => {
     const res = await axios.get(`api/assets`);
+    console.log("allCoinsCount: ", (count += 1));
     return res.data.data;
   }
 );

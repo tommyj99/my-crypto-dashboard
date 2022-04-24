@@ -1,6 +1,8 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+let count = 0;
+
 const initialState = {
   ohlcModifiable: [],
   status: "idle",
@@ -15,6 +17,7 @@ export const fetchOhlcModifiableData = createAsyncThunk(
       `api/ohlcmod?coin=${coin}&starttime=${startTime}&endtime=${endTime}&period=${period}&exchange=${exchange}`
       // `/markets/${exchange}/${coin}/ohlc?before=${endTime}&after=${startTime}&periods=${period}`
     );
+    console.log("ohlcModCount: ", (count += 1));
     return res.data.data.result;
   }
 );

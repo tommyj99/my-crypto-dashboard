@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+let count = 0;
 const initialState = {
   markets: [],
   coinAndExchange: {},
@@ -14,6 +15,7 @@ export const fetchMarkets = createAsyncThunk(
   "markets/fetchMarkets",
   async () => {
     const res = await axios.get(`api/markets`);
+    console.log("markets count: ", (count += 1));
     return res.data;
   }
 );
@@ -61,5 +63,6 @@ export const {
   updateMarketsState,
   saveCoinAndExchange,
   isExchanges,
+  setCoinAndExchangeStatus,
 } = marketsSlice.actions;
 export default marketsSlice.reducer;

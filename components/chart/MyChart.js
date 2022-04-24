@@ -9,6 +9,7 @@ import {
   selectOhlcStatus,
   selectOhlcModifiableData,
   selectOhlcModifiableStatus,
+  selectCoinAndExchangeStatus,
 } from "../../redux/selectors";
 import { fetchOhlcModifiableData } from "../../redux/slices/ohlcModifiableSlice";
 import { Typography } from "@mui/material";
@@ -19,47 +20,52 @@ const MyChart = (props) => {
   const ohlcStatusSelector = useSelector(selectOhlcStatus);
   const ohlcModifiableDataSelector = useSelector(selectOhlcModifiableData);
   const ohlcModifiableStatusSelector = useSelector(selectOhlcModifiableStatus);
+  const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
 
   React.useEffect(() => {
     dispatch(fetchOhlcData(props.chartInputObject));
     dispatch(fetchOhlcModifiableData(props.chartInputObjectLastCandle));
-  }, [props.chartInputObject, props.chartInputObjectLastCandle]);
-
-  return (
-    <Box
-      sx={{
-        width: "99%",
-        height: "99%",
-        bgcolor: "black",
-        marginTop: "2px",
-        marginLeft: "2px",
-        borderRadius: "10px",
-      }}
-    >
-      {/* <h3>
-        {props.coinText}: {props.price}
-      </h3> */}
-      <div
-        style={{
-          height: "100%",
+  }, [props.chartInputObject.coin, props.chartInputObject.exchange]);
+  if (
+    ohlcStatusSelector === "succeeded" &&
+    ohlcModifiableStatusSelector === "succeeded"
+  ) {
+    return (
+      <Box
+        sx={{
+          width: "99%",
+          height: "99%",
+          bgcolor: "black",
+          marginTop: "2px",
+          marginLeft: "2px",
+          borderRadius: "10px",
         }}
       >
-        {/* <Typography>{props.text}</Typography> */}
-        <CandleStickCanvas
+        {/* <h3>
+        {props.coinText}: {props.price}
+      </h3> */}
+        <div
           style={{
             height: "100%",
           }}
-          data={ohlcDataSelector}
-          status={ohlcStatusSelector}
-          datalastcandle={ohlcModifiableDataSelector}
-          statuslastcandle={ohlcModifiableStatusSelector}
-        />
-      </div>
-      {/* <Button onClick={props.handleModalClick1}>Show Full Chart</Button>
+        >
+          {/* <Typography>{props.text}</Typography> */}
+          <CandleStickCanvas
+            style={{
+              height: "100%",
+            }}
+            data={ohlcDataSelector}
+            status={ohlcStatusSelector}
+            datalastcandle={ohlcModifiableDataSelector}
+            statuslastcandle={ohlcModifiableStatusSelector}
+          />
+        </div>
+        {/* <Button onClick={props.handleModalClick1}>Show Full Chart</Button>
       <Button onClick={props.handleModalClick2}>Add to Portfolio</Button>
       <Button onClick={props.handleModalClick3}>Exit</Button> */}
-    </Box>
-  );
+      </Box>
+    );
+  }
 };
 
 export default MyChart;

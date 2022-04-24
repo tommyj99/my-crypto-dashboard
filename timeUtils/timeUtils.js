@@ -2,15 +2,11 @@
 
 export function convertUnixToDate(unixTime) {
   const date = new Date(unixTime * 1000);
-  // console.log("Date: ", date);
   return date;
 }
 
 export function convertDateToUnix(date) {
   var unixTimestamp = Math.floor(date / 1000);
-  //unixTimestamp = Math.floor(;
-  // unixTimestamp.toFixed(0);
-  // console.log("Date in Unix: ", unixTimestamp);
   return unixTimestamp;
 }
 

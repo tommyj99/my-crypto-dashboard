@@ -2,6 +2,9 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { coinGecko } from "../../url/urlList";
+
+let count = 0;
+
 const initialState = {
   coinsMCap: [],
   status: "idle",
@@ -14,6 +17,7 @@ export const fetchCoinsByMarketCap = createAsyncThunk(
     const res = await coinGecko.get(
       `/coins/markets/?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false`
     );
+    console.log("mcap count: ", (count += 1));
     return res.data;
   }
 );

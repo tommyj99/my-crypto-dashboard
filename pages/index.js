@@ -97,16 +97,18 @@ export default function Home() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [usdFilter, setUsdFilter] = React.useState(false);
   const [coin, setCoin] = React.useState("");
+  const [isFirstTime, setIsFirstTime] = React.useState(true);
   const [elementNum, setElementNum] = React.useState(0);
 
   React.useEffect(() => {
-    console.log("coinChangeStatus: ", coinAndExchangeStatusSelect);
-    if (!coinAndExchangeStatusSelect) {
+    // if (!coinAndExchangeStatusSelect) {
+    if (isFirstTime) {
       dispatch(fetchAllCoins());
       dispatch(fetchCoinsByMarketCap()); // coin gecko
       dispatch(fetchMarkets()); // crytpo watch
+      setIsFirstTime(false);
     }
-  }, [coinAndExchangeStatusSelect]);
+  }, []);
   //Called when search bar is being populated
   React.useEffect(() => {
     if (coinSymbol !== "") {
@@ -175,6 +177,7 @@ export default function Home() {
           setElementNum(item.market_cap_rank - 1);
         }
       });
+      setCoinSymbol("");
     }
   }
 

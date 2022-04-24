@@ -1,11 +1,14 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+let count = 0;
+
 const initialState = {
   coin: [],
   status: "idle",
   error: "none",
 };
-//
+
 export const fetchCoin = createAsyncThunk(
   "coin/fetchCoin",
   async (priceObj) => {
@@ -13,6 +16,7 @@ export const fetchCoin = createAsyncThunk(
     const res = await axios.get(
       `api/coin?exchange=${exchange}&coinCurrencyPair=${coinCurrencyPair}`
     );
+    console.log("coinCount: ", (count += 1));
     return res.data;
   }
 );
