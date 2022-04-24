@@ -11,6 +11,7 @@ import {
   selectOhlcModifiableStatus,
 } from "../../redux/selectors";
 import { fetchOhlcModifiableData } from "../../redux/slices/ohlcModifiableSlice";
+import { Typography } from "@mui/material";
 
 const MyChart = (props) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const MyChart = (props) => {
   React.useEffect(() => {
     dispatch(fetchOhlcData(props.chartInputObject));
     dispatch(fetchOhlcModifiableData(props.chartInputObjectLastCandle));
-  }, []);
+  }, [props.chartInputObject, props.chartInputObjectLastCandle]);
 
   return (
     <Box
@@ -43,6 +44,7 @@ const MyChart = (props) => {
           height: "100%",
         }}
       >
+        {/* <Typography>{props.text}</Typography> */}
         <CandleStickCanvas
           style={{
             height: "100%",

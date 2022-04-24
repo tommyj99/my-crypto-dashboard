@@ -13,7 +13,6 @@ import {
   selectFilteredByUsd,
   selectCoinStatus,
   selectCoinAndExchangeStatus,
-  selectCoinAndExchange,
 } from "../../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
@@ -39,49 +38,6 @@ const ExchangeMenu = (props) => {
       exchangeAutoClick();
     }
   }, [exchangeAutoClick, coinStatusSelector]);
-
-  // React.useEffect(() => {
-  //   if (coinStatusSelector === "succeeded") {
-  //     console.log("set coin change boolean");
-  //     setPrice(coinSelector.result.price);
-  //     // dispatch(isCoinChange(true));
-  //     // dispatch(buildChart(buildChartApiInputObject()));
-  //     // dispatch(buildChartLastCandle(buildChartApiInputObjectLastCandle()));
-  //     setOpen(false);
-  //     setAnchorEl(null);
-  //   }
-  // }, [
-  //   coinStatusSelector,
-  //   coinSelector,
-  //   // buildChartApiInputObject,
-  //   // buildChartApiInputObjectLastCandle,
-  // ]);
-
-  // function buildChartApiInputObject() {
-  //   let startEndHours = {};
-  //   const dateNow = new Date();
-  //   startEndHours = unixStartAndEndTimes(dateNow);
-  //   return {
-  //     coin: coinCurrencyPair,
-  //     startTime: startEndHours.startTime,
-  //     endTime: startEndHours.endTime,
-  //     period: 3600,
-  //     exchange: currentExchangeSelector,
-  //   };
-  // }
-
-  // function buildChartApiInputObjectLastCandle() {
-  //   let startEndHours = {};
-  //   const dateNow = new Date();
-  //   startEndHours = unixStartAndEndTimesLastCandle(dateNow);
-  //   return {
-  //     coin: coinCurrencyPair,
-  //     startTime: startEndHours.startTime,
-  //     endTime: startEndHours.endTime,
-  //     period: 60,
-  //     exchange: currentExchangeSelector,
-  //   };
-  // }
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {

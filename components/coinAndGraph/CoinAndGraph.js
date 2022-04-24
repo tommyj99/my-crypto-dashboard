@@ -6,15 +6,12 @@ import {
   selectCoinAndExchangeStatus,
 } from "../../redux/selectors";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCoin } from "../../redux/slices/simplePriceSlice";
 import React from "react";
 import {
   unixStartAndEndTimes,
   unixStartAndEndTimesLastCandle,
 } from "../../timeUtils/timeUtils";
 import MyChart from "../chart/MyChart";
-import { fetchOhlcData } from "../../redux/slices/ohlcSlice";
-import { fetchOhlcModifiableData } from "../../redux/slices/ohlcModifiableSlice";
 
 const CoinAndGraph = (props) => {
   const dispatch = useDispatch();
@@ -24,74 +21,46 @@ const CoinAndGraph = (props) => {
   const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
   const [coinCurrencyPair, setCoinCurrencyPair] = React.useState("btcusd");
   const [exchange, setExchange] = React.useState("coinbase-pro");
-  const [coinImage, setCoinImage] = React.useState(null);
-  const [coinName, setCoinName] = React.useState(null);
-  const [coinRank, setCoinRank] = React.useState(null);
-  const [coinPrice, setCoinPrice] = React.useState(null);
-  const [coinLow, setCoinLow] = React.useState(null);
-  const [coinHigh, setCoinHigh] = React.useState(null);
-  const [coinChange24h, setCoinChange24h] = React.useState(null);
-  // const [chartInputObject, setChartInputObject] = React.useState([]);
-  // const [chartInputObectLastCandle, setChartInputObjectLastCandle] =
-  //   React.useState([]);
+  const [coinImage, setCoinImage] = React.useState(
+    coinsMCapSelect[props.elementNum].image
+  );
+  const [coinName, setCoinName] = React.useState(
+    coinsMCapSelect[props.elementNum].name
+  );
+  const [coinRank, setCoinRank] = React.useState(
+    coinsMCapSelect[props.elementNum].market_cap_rank
+  );
+  const [coinPrice, setCoinPrice] = React.useState(
+    coinsMCapSelect[props.elementNum].current_price
+  );
+  const [coinLow, setCoinLow] = React.useState(
+    coinsMCapSelect[props.elementNum].low_24h
+  );
+  const [coinHigh, setCoinHigh] = React.useState(
+    coinsMCapSelect[props.elementNum].high_24h
+  );
+  const [coinChange24h, setCoinChange24h] = React.useState(
+    coinsMCapSelect[props.elementNum].price_change_24h
+  );
 
   const cryptoBox = React.useCallback(() => {
-    setCoinImage(coinsMCapSelect[props.elementNum].image);
-    setCoinName(coinsMCapSelect[props.elementNum].name);
-    setCoinRank(coinsMCapSelect[props.elementNum].market_cap_rank);
-    setCoinPrice(coinsMCapSelect[props.elementNum].current_price);
-    setCoinLow(coinsMCapSelect[props.elementNum].low_24h);
-    setCoinHigh(coinsMCapSelect[props.elementNum].high_24h);
-    setCoinChange24h(coinsMCapSelect[props.elementNum].price_change_24h);
     if (coinAndExchangeStatusSelect) {
-      console.log("set new coin obj");
+      setCoinImage(coinsMCapSelect[props.elementNum].image);
+      setCoinName(coinsMCapSelect[props.elementNum].name);
+      setCoinRank(coinsMCapSelect[props.elementNum].market_cap_rank);
+      setCoinPrice(coinsMCapSelect[props.elementNum].current_price);
+      setCoinLow(coinsMCapSelect[props.elementNum].low_24h);
+      setCoinHigh(coinsMCapSelect[props.elementNum].high_24h);
+      setCoinChange24h(coinsMCapSelect[props.elementNum].price_change_24h);
       setCoinCurrencyPair(coinAndExchangeSelect.coinCurrencyPair);
       setExchange(coinAndExchangeSelect.exchange);
       //dispatch(coin);
     }
   });
 
-  // const buildChartApiInputObject = React.useCallback(() => {
-  //   let startEndHours = {};
-  //   const dateNow = new Date();
-  //   startEndHours = unixStartAndEndTimes(dateNow);
-  //   setChartInputObject({
-  //     coin: coinCurrencyPair,
-  //     startTime: startEndHours.startTime,
-  //     endTime: startEndHours.endTime,
-  //     period: 3600,
-  //     exchange: exchange,
-  //   });
-  // }, []);
-
-  // const buildChartApiInputObjectLastCandle = React.useCallback(() => {
-  //   let startEndHours = {};
-  //   const dateNow = new Date();
-  //   startEndHours = unixStartAndEndTimesLastCandle(dateNow);
-  //   setChartInputObjectLastCandle({
-  //     coin: coinCurrencyPair,
-  //     startTime: startEndHours.startTime,
-  //     endTime: startEndHours.endTime,
-  //     period: 60,
-  //     exchange: exchange,
-  //   });
-  // }, []);
-
   React.useEffect(() => {
     cryptoBox();
-    // buildChartApiInputObject();
-    // buildChartApiInputObjectLastCandle();
   }, [cryptoBox]);
-
-  // React.useEffect(() => {
-  //   if (coinStatusSelector === "idle") {
-  //     const coinObj = {
-  //       exchange: exchange,
-  //       coinCurrencyPair: coinCurrencyPair,
-  //     };
-  //     dispatch(fetchCoin(coinObj));
-  //   }
-  // }, []);
 
   const chartInputObject = {
     coin: coinCurrencyPair,
@@ -163,6 +132,7 @@ const CoinAndGraph = (props) => {
           }}
         >
           <MyChart
+            // text={coinCurrencyPair}
             chartInputObject={chartInputObject}
             chartInputObjectLastCandle={chartInputObectLastCandle}
           />
