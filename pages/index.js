@@ -24,9 +24,6 @@ import {
   selectCoinsMCapStatus,
   selectCoinsMCap,
   selectCoinAndExchangeStatus,
-  // selectBuildChartStatus,
-  // selectBuildChartStatusLastCandle,
-  // selectCurrentCoinAndExchange,
 } from "../redux/selectors";
 import SearchItem from "../components/searchItem/SearchItem";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -102,36 +99,6 @@ export default function Home() {
   const [coin, setCoin] = React.useState("");
   const [elementNum, setElementNum] = React.useState(0);
 
-  // React.useEffect(() => {
-  //   console.log("coinChangeStatus: ", coinAndExchangeStatusSelect);
-  //   if (!coinAndExchangeStatusSelect) {
-  //     dispatch(fetchAllCoins());
-  //     dispatch(fetchCoinsByMarketCap()); // coin gecko
-  //     dispatch(fetchMarkets()); // crytpo watch
-  //   }
-  //   if (coinSymbol !== "") {
-  //     coinsAllSelector.forEach((result) => {
-  //       if (result.symbol.toLowerCase().startsWith(coinSymbol.toLowerCase())) {
-  //         // populate symbol list
-  //         setCoinList((prevArray) => [...prevArray, result.symbol]);
-  //       }
-  //     });
-  //   }
-  //   if (marketsStatusSelector === "succeeded" && usdFilter === false) {
-  //     dispatch(filterByUsd(filterUsd()));
-  //     setUsdFilter(true);
-  //   }
-  // }, [
-  //   coinAndExchangeStatusSelect,
-  //   coinSymbol,
-  //   coinsAllSelector,
-  //   marketsStatusSelector,
-  // ]);
-
-  // dispatch(fetchAllCoins());
-  // dispatch(fetchCoinsByMarketCap()); // coin gecko
-  // dispatch(fetchMarkets()); // crytpo watch
-
   React.useEffect(() => {
     console.log("coinChangeStatus: ", coinAndExchangeStatusSelect);
     if (!coinAndExchangeStatusSelect) {
@@ -153,8 +120,6 @@ export default function Home() {
   }, [coinSymbol, coinsAllSelector]);
 
   React.useEffect(() => {
-    // console.log("mss: ", marketsStatusSelector);
-    // console.log("usdFilter: ", usdFilter);
     if (marketsStatusSelector === "succeeded" && usdFilter === false) {
       dispatch(filterByUsd(filterUsd()));
       setUsdFilter(true);

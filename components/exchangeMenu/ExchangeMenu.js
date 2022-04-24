@@ -12,7 +12,7 @@ import { ArrowDropDownCircle } from "@mui/icons-material/ArrowDropDownCircle";
 import {
   selectFilteredByUsd,
   selectCoinStatus,
-  selectCoin,
+  selectCoinAndExchangeStatus,
   selectCoinAndExchange,
 } from "../../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
 const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
   const coinStatusSelector = useSelector(selectCoinStatus);
+  const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const anchorRef = React.useRef("exchange");
@@ -34,7 +35,7 @@ const ExchangeMenu = (props) => {
   }, [anchorRef]);
 
   React.useEffect(() => {
-    if (coinStatusSelector === "idle") {
+    if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
       exchangeAutoClick();
     }
   }, [exchangeAutoClick, coinStatusSelector]);
@@ -90,10 +91,10 @@ const ExchangeMenu = (props) => {
           coinCurrencyPair: props.coin + "usd",
         });
       }
-      setOpen(false);
-      setAnchorEl(null);
       dispatch(saveCoinAndExchange(coinObj()));
     }
+    setOpen(false);
+    setAnchorEl(null);
   };
 
   const handleExchangeButtonClick = (Event) => {
@@ -101,6 +102,7 @@ const ExchangeMenu = (props) => {
     setAnchorEl(Event.currentTarget);
   };
 
+  console.log("open: ", open);
   function handleClickAway() {
     setOpen(false);
     setAnchorEl(null);

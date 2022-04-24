@@ -47,6 +47,7 @@ const CoinAndGraph = (props) => {
       console.log("set new coin obj");
       setCoinCurrencyPair(coinAndExchangeSelect.coinCurrencyPair);
       setExchange(coinAndExchangeSelect.exchange);
+      //dispatch(coin);
     }
   });
 
