@@ -146,7 +146,7 @@ const CandleStickCanvas = (props) => {
 
   function digitFilter(number) {
     if (number > 0 && number < 1) {
-      number = Math.floor(number * 1000000) / 1000000;
+      number = Math.floor(number * 100000) / 100000;
     }
     if (number >= 1 && number < 10) {
       number = Math.floor(number * 10000) / 10000;
@@ -204,16 +204,6 @@ const CandleStickCanvas = (props) => {
     const pixelsClose = offsetClose / pricePerPixel;
     const close = floor - pixelsClose;
     let height = (open - close) * -1;
-
-    // const startX = leftWall - 5 + 23 * timePerPixel;
-    // const offsetOpen = dohlcvLastCandleData[0].open - lowestPrice;
-    // const pixelsOpen = offsetOpen / pricePerPixel;
-    // const open = floor - pixelsOpen;
-    // const offsetClose =
-    //   dohlcvLastCandleData[dohlcvLastCandleData.length - 1].close - lowestPrice;
-    // const pixelsClose = offsetClose / pricePerPixel;
-    // const close = floor - pixelsClose;
-    // let height = (open - close) * -1;
 
     let color = "";
     if (height < 0) {
@@ -410,7 +400,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     ctx.textAlign = "right";
     ctx.fillText(tick4Number, 40, yStartText);
     // tick 3
@@ -421,7 +411,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     ctx.fillText(tick3Number, 40, yStartText + splitAxis);
     //tick 2
     ctx.beginPath();
@@ -431,7 +421,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     ctx.fillText(tick2Number, 40, yStartText + splitAxis * 2);
     //tick 1
     ctx.beginPath();
@@ -441,7 +431,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     ctx.fillText(tick1Number, 40, yStartText + splitAxis * 3);
 
     // tick 0
@@ -452,8 +442,8 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
-    ctx.textAlign = "right";
+    ctx.fillStyle = "#fff8dc";
+    // ctx.textAlign = "right";
     ctx.fillText(tick0Number, 40, yStartText + splitAxis * 4);
   };
 
@@ -481,7 +471,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     //rotate text
     ctx.save();
     ctx.translate(xTickStart - 5, yTickStart + 5);
@@ -497,7 +487,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     //rotate text
     ctx.save();
     ctx.translate(xTickStart + split * 5 - 5, yTickStart + 5);
@@ -513,7 +503,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     //rotate text
     ctx.save();
     ctx.translate(xTickStart + split * 11 - 5, yTickStart + 5);
@@ -529,7 +519,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     //rotate text
     ctx.save();
     ctx.translate(xTickStart + split * 17 - 5, yTickStart + 5);
@@ -546,7 +536,7 @@ const CandleStickCanvas = (props) => {
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.font = "12px serif";
-    ctx.fillStyle = "aqua";
+    ctx.fillStyle = "#fff8dc";
     //rotate text
     ctx.save();
     ctx.translate(xTickStart + split * 23 - 5, yTickStart + 5);
@@ -587,9 +577,5 @@ const CandleStickCanvas = (props) => {
 
   return <canvas ref={canvasRef} {...props} />;
 };
-
-// React.useEffect(() => {
-//     createGraphics();
-//   }, [createGraphics]);
 
 export default CandleStickCanvas;

@@ -11,7 +11,8 @@ import {
   InputBase,
   Paper,
   Popper,
-  List,
+  MenuList,
+  MenuItem,
 } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -60,6 +61,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  color: "#fff8dc",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -205,7 +207,10 @@ export default function Home() {
         </Head>
         <main className={styles.container}>
           <Box>
-            <AppBar position="static">
+            <AppBar
+              style={{ backgroundColor: "midnightblue" }}
+              position="static"
+            >
               <Toolbar>
                 <IconButton
                   size="large"
@@ -214,15 +219,19 @@ export default function Home() {
                   aria-label="open-drawer"
                   sx={{ mr: 2 }}
                 >
-                  <MenuRoundedIcon />
+                  <MenuRoundedIcon style={{ color: "#fff8dc" }} />
                 </IconButton>
                 <Typography
                   variant="h6"
                   noWrap
                   component="div"
-                  sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+                  sx={{
+                    color: "#fff8dc",
+                    flexGrow: 1,
+                    display: { xs: "none", sm: "block" },
+                  }}
                 >
-                  My Crypto App
+                  CryptoMon
                 </Typography>
                 <ExchangeButton />
                 {/* <ExchangeMenu /> */}
@@ -247,15 +256,26 @@ export default function Home() {
                 >
                   <Paper>
                     <ClickAwayListener onClickAway={handleClickAway}>
-                      <List>
+                      <MenuList
+                        style={{
+                          backgroundColor: "#fff8dc",
+                        }}
+                      >
                         {coinList.map((listItem, index) => (
-                          <SearchItem
+                          <MenuItem
+                            style={{ color: "blue" }}
                             key={index}
-                            listText={listItem}
-                            handleClick={handleClick}
-                          />
+                            onClick={handleClick}
+                          >
+                            {listItem}
+                          </MenuItem>
+                          // <SearchItem
+                          //   key={index}
+                          //   listText={listItem}
+                          //   handleClick={handleClick}
+                          // />
                         ))}
-                      </List>
+                      </MenuList>
                     </ClickAwayListener>
                   </Paper>
                 </Popper>

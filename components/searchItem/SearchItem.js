@@ -7,7 +7,7 @@ export default function SearchItem(props) {
   return (
     <ListItem disablePadding>
       <ListItemButton onClick={props.handleClick}>
-        <ListItemText primary={props.listText} />
+        <ListItemText style={{ color: "#834C24" }} primary={props.listText} />
       </ListItemButton>
     </ListItem>
   );

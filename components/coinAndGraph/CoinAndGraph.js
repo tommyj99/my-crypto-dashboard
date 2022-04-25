@@ -106,14 +106,14 @@ const CoinAndGraph = (props) => {
           }}
         >
           <img src={coinImage}></img>
-          <Typography variant="h6" color="white">
+          <Typography variant="h6" color="#fff8dc">
             {coinName}
           </Typography>
-          <Typography color="white">Rank: {coinRank}</Typography>
-          <Typography color="white">Price: {coinPrice}</Typography>
-          <Typography color="white">24 hr low: {coinLow}</Typography>
-          <Typography color="white">24 hr high: {coinHigh}</Typography>
-          <Typography color="white">
+          <Typography color="#fff8dc">Rank: {coinRank}</Typography>
+          <Typography color="#fff8dc">Price: {coinPrice}</Typography>
+          <Typography color="#fff8dc">24 hr low: {coinLow}</Typography>
+          <Typography color="#fff8dc">24 hr high: {coinHigh}</Typography>
+          <Typography color="#fff8dc">
             24 hr price change: {coinChange24h}
           </Typography>
         </Paper>

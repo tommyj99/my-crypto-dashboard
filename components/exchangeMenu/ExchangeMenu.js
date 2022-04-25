@@ -5,10 +5,12 @@ import {
   Popper,
   MenuItem,
   MenuList,
+  ListItem,
 } from "@mui/material";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import * as React from "react";
-import { ArrowDropDownCircle } from "@mui/icons-material/ArrowDropDownCircle";
+import ArrowDropDownCircle from "@mui/icons-material/ArrowDropDownCircle";
+import HomeIcon from "@mui/icons-material/Home";
 import {
   selectFilteredByUsd,
   selectCoinStatus,
@@ -76,14 +78,15 @@ const ExchangeMenu = (props) => {
     <Stack direction="row" spacing={2}>
       <div>
         <Button
+          style={{ backgroundColor: "#fff8dc", color: "blue" }}
           name="exchange"
           id="exchange-button"
           onClick={handleExchangeButtonClick}
           ref={anchorRef}
           variant="contained"
-          //endIcon={}
         >
           Choose Exchange
+          <ArrowDropDownCircle style={{ marginLeft: "5px", color: "blue" }} />
         </Button>
         <Popper
           open={open}
@@ -94,6 +97,9 @@ const ExchangeMenu = (props) => {
           <Paper>
             <ClickAwayListener onClickAway={handleClickAway}>
               <MenuList
+                style={{
+                  backgroundColor: "#fff8dc",
+                }}
                 // autoFocusItem={open}
                 id="composition-menu"
                 aria-labelledby="exchange-button"
@@ -102,14 +108,21 @@ const ExchangeMenu = (props) => {
                 {markets[0].result.map((item, id) => {
                   if (item.pair === coinCurrencyPair && item.active === true) {
                     return (
-                      <MenuItem key={id} onClick={handleExchangePopperClick}>
+                      <MenuItem
+                        style={{ color: "blue" }}
+                        key={id}
+                        onClick={handleExchangePopperClick}
+                      >
                         {item.exchange}
                       </MenuItem>
                     );
                   }
                   return null;
                 })}
-                <MenuItem onClick={handleNewSearchClick}>
+                <MenuItem
+                  style={{ color: "magenta" }}
+                  onClick={handleNewSearchClick}
+                >
                   Search new coin
                 </MenuItem>
               </MenuList>

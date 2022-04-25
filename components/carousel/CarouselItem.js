@@ -3,35 +3,35 @@ import { Typography } from "@mui/material";
 
 const CarouselItem = (props) => {
   return (
-    <a href="">
+    // <a href="">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "black",
+        marginLeft: "5px",
+        borderRadius: "5px",
+        minHeight: "160px",
+      }}
+    >
+      <Typography variant="h6" color="#fff8dc">
+        {props.coin}
+      </Typography>
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor: "black",
-          marginLeft: "5px",
+          backgroundColor: "gray",
           borderRadius: "5px",
-          minHeight: "160px",
+          padding: "2px",
         }}
       >
-        <Typography variant="h6" color="white">
-          {props.coin}
-        </Typography>
-        <div
-          style={{
-            backgroundColor: "gray",
-            borderRadius: "5px",
-            padding: "2px",
-          }}
-        >
-          {props.image}
-        </div>
-        <Typography color="white">Rank: {props.rank}</Typography>
-        <Typography color="white">Symbol: {props.symbol}</Typography>
-        <Typography color="white">Price: {props.price}</Typography>
+        {props.image}
       </div>
-    </a>
+      <Typography color="#fff8dc">Rank: {props.rank}</Typography>
+      <Typography color="#fff8dc">Symbol: {props.symbol}</Typography>
+      <Typography color="#fff8dc">Price: {props.price}</Typography>
+    </div>
+    // </a>
   );
 };
 
