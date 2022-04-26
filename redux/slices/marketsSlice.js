@@ -15,7 +15,6 @@ export const fetchMarkets = createAsyncThunk(
   "markets/fetchMarkets",
   async () => {
     const res = await axios.get(`api/markets`);
-    console.log("markets count: ", (count += 1));
     return res.data;
   }
 );

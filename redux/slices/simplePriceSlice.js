@@ -16,7 +16,6 @@ export const fetchCoin = createAsyncThunk(
     const res = await axios.get(
       `api/coin?exchange=${exchange}&coinCurrencyPair=${coinCurrencyPair}`
     );
-    console.log("coinCount: ", (count += 1));
     return res.data;
   }
 );

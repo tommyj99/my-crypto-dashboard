@@ -15,9 +15,7 @@ export const fetchOhlcData = createAsyncThunk(
     const { coin, startTime, endTime, period, exchange } = chartInputObj;
     const res = await axios.get(
       `api/ohlc?coin=${coin}&starttime=${startTime}&endtime=${endTime}&period=${period}&exchange=${exchange}`
-      //`/markets/${exchange}/${coin}/ohlc?before=${endTime}&after=${startTime}&periods=${period}`
     );
-    console.log("ohlcCount: ", (count += 1));
     return res.data.data.result;
   }
 );

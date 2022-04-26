@@ -40,7 +40,10 @@ const CoinAndGraph = (props) => {
     coinsMCapSelect[props.elementNum].high_24h
   );
   const [coinChange24h, setCoinChange24h] = React.useState(
-    coinsMCapSelect[props.elementNum].price_change_24h
+    coinsMCapSelect[props.elementNum].price_change_24h.toFixed(2)
+  );
+  const [coinPercentChange24h, setCoinPercentChange24h] = React.useState(
+    coinsMCapSelect[props.elementNum].price_change_percentage_24h.toFixed(2)
   );
 
   const cryptoBox = React.useCallback(() => {
@@ -51,13 +54,18 @@ const CoinAndGraph = (props) => {
       setCoinPrice(coinsMCapSelect[props.elementNum].current_price);
       setCoinLow(coinsMCapSelect[props.elementNum].low_24h);
       setCoinHigh(coinsMCapSelect[props.elementNum].high_24h);
-      setCoinChange24h(coinsMCapSelect[props.elementNum].price_change_24h);
+      setCoinChange24h(
+        coinsMCapSelect[props.elementNum].price_change_24h.toFixed(2)
+      );
+      setCoinPercentChange24h(
+        coinsMCapSelect[props.elementNum].price_change_percentage_24h.toFixed(2)
+      );
       setCoinCurrencyPair(coinAndExchangeSelect.coinCurrencyPair);
       setExchange(coinAndExchangeSelect.exchange);
       //dispatch(coin);
     }
   });
-
+  // number = Math.floor(number * 100) / 100;
   React.useEffect(() => {
     cryptoBox();
   }, [cryptoBox]);
@@ -97,7 +105,7 @@ const CoinAndGraph = (props) => {
       >
         <Paper
           style={{
-            height: "100%",
+            height: "99%",
             paddingLeft: "15px",
             paddingTop: "15px",
             backgroundColor: "black",
@@ -111,10 +119,11 @@ const CoinAndGraph = (props) => {
           </Typography>
           <Typography color="#fff8dc">Rank: {coinRank}</Typography>
           <Typography color="#fff8dc">Price: {coinPrice}</Typography>
-          <Typography color="#fff8dc">24 hr low: {coinLow}</Typography>
-          <Typography color="#fff8dc">24 hr high: {coinHigh}</Typography>
+          <Typography color="#fff8dc">24hr low: {coinLow}</Typography>
+          <Typography color="#fff8dc">24hr high: {coinHigh}</Typography>
+          <Typography color="#fff8dc">24hr change: {coinChange24h}</Typography>
           <Typography color="#fff8dc">
-            24 hr price change: {coinChange24h}
+            24hr %change: {coinPercentChange24h}
           </Typography>
         </Paper>
       </Box>
@@ -126,11 +135,16 @@ const CoinAndGraph = (props) => {
       <Box sx={{ width: "69.5vw" }}>
         <Paper
           style={{
-            height: "100%",
+            height: "99%",
             backgroundColor: "black",
             borderRadius: "10px",
+            marginTop: "2px",
+            paddingBottom: "25px",
           }}
         >
+          <Typography style={{ marginLeft: "10px" }} color="#fff8dc">
+            Exchange: {exchange.toUpperCase()} 24hr
+          </Typography>
           <MyChart
             // text={coinCurrencyPair}
             chartInputObject={chartInputObject}

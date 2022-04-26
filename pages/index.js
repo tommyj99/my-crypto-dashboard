@@ -26,7 +26,6 @@ import {
   selectCoinsMCap,
   selectCoinAndExchangeStatus,
 } from "../redux/selectors";
-import SearchItem from "../components/searchItem/SearchItem";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { filterByUsd, isExchanges } from "../redux/slices/marketsSlice";
 import ExchangeMenu from "../components/exchangeMenu/ExchangeMenu";
@@ -269,11 +268,6 @@ export default function Home() {
                           >
                             {listItem}
                           </MenuItem>
-                          // <SearchItem
-                          //   key={index}
-                          //   listText={listItem}
-                          //   handleClick={handleClick}
-                          // />
                         ))}
                       </MenuList>
                     </ClickAwayListener>

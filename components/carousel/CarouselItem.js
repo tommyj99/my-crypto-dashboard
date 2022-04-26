@@ -28,7 +28,7 @@ const CarouselItem = (props) => {
         {props.image}
       </div>
       <Typography color="#fff8dc">Rank: {props.rank}</Typography>
-      <Typography color="#fff8dc">Symbol: {props.symbol}</Typography>
+      <Typography color="#fff8dc">SYM: {props.symbol}</Typography>
       <Typography color="#fff8dc">Price: {props.price}</Typography>
     </div>
     // </a>

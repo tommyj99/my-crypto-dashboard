@@ -14,7 +14,6 @@ export const fetchAllCoins = createAsyncThunk(
   "coinsAll/fetchAllCoins",
   async () => {
     const res = await axios.get(`api/assets`);
-    console.log("allCoinsCount: ", (count += 1));
     return res.data.data;
   }
 );
