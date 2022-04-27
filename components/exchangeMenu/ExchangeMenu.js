@@ -44,8 +44,6 @@ const ExchangeMenu = (props) => {
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {
-      console.log("ex: ", Event.currentTarget.innerText);
-      console.log("coin: ", props.coin);
       function coinObj() {
         return (coinObj = {
           exchange: Event.currentTarget.innerText,
@@ -107,6 +105,12 @@ const ExchangeMenu = (props) => {
                 aria-labelledby="exchange-button"
                 // onKeyDown={handleListKeyDown}
               >
+                <MenuItem
+                  style={{ color: "magenta" }}
+                  onClick={handleNewSearchClick}
+                >
+                  Search new coin
+                </MenuItem>
                 {markets[0].result.map((item, id) => {
                   if (item.pair === coinCurrencyPair && item.active === true) {
                     return (
@@ -121,12 +125,6 @@ const ExchangeMenu = (props) => {
                   }
                   return null;
                 })}
-                <MenuItem
-                  style={{ color: "magenta" }}
-                  onClick={handleNewSearchClick}
-                >
-                  Search new coin
-                </MenuItem>
               </MenuList>
             </ClickAwayListener>
           </Paper>

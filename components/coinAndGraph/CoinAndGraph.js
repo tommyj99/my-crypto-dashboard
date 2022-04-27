@@ -42,11 +42,8 @@ const CoinAndGraph = (props) => {
   const [width, setWidth] = React.useState();
   const [isImageSmall, setIsImageSmall] = React.useState(false);
 
-  console.log("render coin and graph");
-
   const cryptoBox = React.useCallback(() => {
     if (coinAndExchangeStatusSelect) {
-      console.log("crypto box");
       setCoinImage(
         isImageSmall
           ? coinsMCapSelect[props.elementNum].image.replace("large", "small")

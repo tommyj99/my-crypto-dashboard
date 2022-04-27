@@ -105,8 +105,6 @@ export default function Home() {
   const [coin, setCoin] = React.useState("");
   const [elementNum, setElementNum] = React.useState(0);
 
-  console.log("render index");
-
   React.useEffect(() => {
     dispatch(fetchAllCoins());
     dispatch(fetchCoinsByMarketCap()); // coin gecko
@@ -164,7 +162,6 @@ export default function Home() {
         dispatch(isExchanges(true));
         dispatch(coinClear());
         dispatch(setCoinAndExchangeStatus(false));
-        console.log("coinSym: ", coinSymbol);
         setCoin(coinSymbol);
         coinsMCapSelect.forEach((item) => {
           if (coinSymbol === item.symbol) {
