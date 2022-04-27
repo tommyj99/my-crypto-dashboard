@@ -44,6 +44,8 @@ const ExchangeMenu = (props) => {
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {
+      console.log("ex: ", Event.currentTarget.innerText);
+      console.log("coin: ", props.coin);
       function coinObj() {
         return (coinObj = {
           exchange: Event.currentTarget.innerText,

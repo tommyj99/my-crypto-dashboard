@@ -27,7 +27,12 @@ import {
   selectCoinAndExchangeStatus,
 } from "../redux/selectors";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import { filterByUsd, isExchanges } from "../redux/slices/marketsSlice";
+import {
+  filterByUsd,
+  isExchanges,
+  setCoinAndExchangeStatus,
+  saveCoinAndExchange,
+} from "../redux/slices/marketsSlice";
 import ExchangeMenu from "../components/exchangeMenu/ExchangeMenu";
 import CoinAndGraph from "../components/coinAndGraph/CoinAndGraph";
 import CoinList from "../components/coinlist/CoinList";
@@ -35,7 +40,6 @@ import { coinClear } from "../redux/slices/simplePriceSlice";
 import { fetchCoinsByMarketCap } from "../redux/slices/marketCapSlice";
 import { fetchAllCoins } from "../redux/slices/coinsAllSlice";
 import { fetchMarkets } from "../redux/slices/marketsSlice";
-import { saveCoinAndExchange } from "../redux/slices/marketsSlice";
 
 // styled component section
 const Search = styled("div")(({ theme }) => ({
@@ -101,11 +105,19 @@ export default function Home() {
   const [coin, setCoin] = React.useState("");
   const [elementNum, setElementNum] = React.useState(0);
 
+  console.log("render index");
+
   React.useEffect(() => {
-    console.log("first");
     dispatch(fetchAllCoins());
     dispatch(fetchCoinsByMarketCap()); // coin gecko
     dispatch(fetchMarkets()); // crytpo watch
+    function coinObj() {
+      return (coinObj = {
+        exchange: "coinbase-pro",
+        coinCurrencyPair: "btcusd",
+      });
+    }
+    dispatch(saveCoinAndExchange(coinObj()));
   }, []);
   //Called when search bar is being populated
   React.useEffect(() => {
@@ -145,15 +157,15 @@ export default function Home() {
     setOpen(true);
   }
 
-  // you will have to rework this when cryptowatch comes back
   function handleSearchOnEnter(Event) {
     if (Event.charCode === 13) {
       if (coinSymbol !== "" && coinList.length !== 0) {
+        setOpen(false);
         dispatch(isExchanges(true));
         dispatch(coinClear());
+        dispatch(setCoinAndExchangeStatus(false));
+        console.log("coinSym: ", coinSymbol);
         setCoin(coinSymbol);
-      } else {
-        // set the coin box here for now
         coinsMCapSelect.forEach((item) => {
           if (coinSymbol === item.symbol) {
             setElementNum(item.market_cap_rank - 1);
@@ -168,6 +180,7 @@ export default function Home() {
     setOpen(false);
     dispatch(isExchanges(true));
     dispatch(coinClear());
+    dispatch(setCoinAndExchangeStatus(false));
     if (Event.currentTarget.innerText !== undefined) {
       setCoin(Event.currentTarget.innerText);
       coinsMCapSelect.forEach((item) => {

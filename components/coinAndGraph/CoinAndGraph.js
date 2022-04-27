@@ -23,39 +23,30 @@ const CoinAndGraph = (props) => {
   const coinAndExchangeSelect = useSelector(selectCoinAndExchange);
   const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
 
-  const [coinCurrencyPair, setCoinCurrencyPair] = React.useState("btcusd");
-  const [exchange, setExchange] = React.useState("coinbase-pro");
+  const [coinCurrencyPair, setCoinCurrencyPair] = React.useState(
+    coinAndExchangeSelect.coinCurrencyPair
+  );
+  const [exchange, setExchange] = React.useState(
+    coinAndExchangeSelect.exchange
+  );
 
-  const [coinImage, setCoinImage] = React.useState(
-    coinsMCapSelect[props.elementNum].image
-  );
-  const [coinName, setCoinName] = React.useState(
-    coinsMCapSelect[props.elementNum].name
-  );
-  const [coinRank, setCoinRank] = React.useState(
-    coinsMCapSelect[props.elementNum].market_cap_rank
-  );
-  const [coinPrice, setCoinPrice] = React.useState(
-    coinsMCapSelect[props.elementNum].current_price
-  );
-  const [coinLow, setCoinLow] = React.useState(
-    coinsMCapSelect[props.elementNum].low_24h
-  );
-  const [coinHigh, setCoinHigh] = React.useState(
-    coinsMCapSelect[props.elementNum].high_24h
-  );
-  const [coinChange24h, setCoinChange24h] = React.useState(
-    coinsMCapSelect[props.elementNum].price_change_24h.toFixed(2)
-  );
-  const [coinPercentChange24h, setCoinPercentChange24h] = React.useState(
-    coinsMCapSelect[props.elementNum].price_change_percentage_24h.toFixed(2)
-  );
+  const [coinImage, setCoinImage] = React.useState();
+  const [coinName, setCoinName] = React.useState();
+  const [coinRank, setCoinRank] = React.useState();
+  const [coinPrice, setCoinPrice] = React.useState();
+  const [coinLow, setCoinLow] = React.useState();
+  const [coinHigh, setCoinHigh] = React.useState();
+  const [coinChange24h, setCoinChange24h] = React.useState();
+  const [coinPercentChange24h, setCoinPercentChange24h] = React.useState();
 
   const [width, setWidth] = React.useState();
   const [isImageSmall, setIsImageSmall] = React.useState(false);
 
+  console.log("render coin and graph");
+
   const cryptoBox = React.useCallback(() => {
     if (coinAndExchangeStatusSelect) {
+      console.log("crypto box");
       setCoinImage(
         isImageSmall
           ? coinsMCapSelect[props.elementNum].image.replace("large", "small")
