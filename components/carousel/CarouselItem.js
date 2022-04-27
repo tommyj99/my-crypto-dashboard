@@ -10,14 +10,12 @@ const CarouselItem = (props) => {
         flexDirection: "column",
         alignItems: "center",
         backgroundColor: "black",
-        marginLeft: "5px",
-        borderRadius: "5px",
+        marginLeft: "3px",
+        borderRadius: "10px",
         minHeight: "160px",
       }}
     >
-      <Typography variant="h6" color="#fff8dc">
-        {props.coin}
-      </Typography>
+      <Typography color="#fff8dc">{props.coin}</Typography>
       <div
         style={{
           backgroundColor: "gray",

@@ -35,6 +35,7 @@ import { coinClear } from "../redux/slices/simplePriceSlice";
 import { fetchCoinsByMarketCap } from "../redux/slices/marketCapSlice";
 import { fetchAllCoins } from "../redux/slices/coinsAllSlice";
 import { fetchMarkets } from "../redux/slices/marketsSlice";
+import { saveCoinAndExchange } from "../redux/slices/marketsSlice";
 
 // styled component section
 const Search = styled("div")(({ theme }) => ({
@@ -98,17 +99,13 @@ export default function Home() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [usdFilter, setUsdFilter] = React.useState(false);
   const [coin, setCoin] = React.useState("");
-  const [isFirstTime, setIsFirstTime] = React.useState(true);
   const [elementNum, setElementNum] = React.useState(0);
 
   React.useEffect(() => {
-    // if (!coinAndExchangeStatusSelect) {
-    if (isFirstTime) {
-      dispatch(fetchAllCoins());
-      dispatch(fetchCoinsByMarketCap()); // coin gecko
-      dispatch(fetchMarkets()); // crytpo watch
-      setIsFirstTime(false);
-    }
+    console.log("first");
+    dispatch(fetchAllCoins());
+    dispatch(fetchCoinsByMarketCap()); // coin gecko
+    dispatch(fetchMarkets()); // crytpo watch
   }, []);
   //Called when search bar is being populated
   React.useEffect(() => {

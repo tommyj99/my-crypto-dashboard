@@ -56,9 +56,11 @@ const CoinList = () => {
   } else if (coinsMCapStatusSelector === "succeeded") {
     return (
       <div
-        style={{
-          height: "15vh",
-        }}
+        style={
+          {
+            // height: "50vh",
+          }
+        }
       >
         <AliceCarousel
           infinite

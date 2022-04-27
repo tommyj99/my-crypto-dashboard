@@ -7,20 +7,25 @@ import {
 } from "../../redux/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
+import { useRef } from "react";
 import {
   unixStartAndEndTimes,
   unixStartAndEndTimesLastCandle,
 } from "../../timeUtils/timeUtils";
 import MyChart from "../chart/MyChart";
+import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
 
 const CoinAndGraph = (props) => {
   const dispatch = useDispatch();
+  const ref = useRef();
   const coinStatusSelector = useSelector(selectCoinStatus);
   const coinsMCapSelect = useSelector(selectCoinsMCap);
   const coinAndExchangeSelect = useSelector(selectCoinAndExchange);
   const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
+
   const [coinCurrencyPair, setCoinCurrencyPair] = React.useState("btcusd");
   const [exchange, setExchange] = React.useState("coinbase-pro");
+
   const [coinImage, setCoinImage] = React.useState(
     coinsMCapSelect[props.elementNum].image
   );
@@ -46,9 +51,17 @@ const CoinAndGraph = (props) => {
     coinsMCapSelect[props.elementNum].price_change_percentage_24h.toFixed(2)
   );
 
+  const [width, setWidth] = React.useState();
+  const [isImageSmall, setIsImageSmall] = React.useState(false);
+
   const cryptoBox = React.useCallback(() => {
     if (coinAndExchangeStatusSelect) {
-      setCoinImage(coinsMCapSelect[props.elementNum].image);
+      setCoinImage(
+        isImageSmall
+          ? coinsMCapSelect[props.elementNum].image.replace("large", "small")
+          : coinsMCapSelect[props.elementNum].image
+      );
+
       setCoinName(coinsMCapSelect[props.elementNum].name);
       setCoinRank(coinsMCapSelect[props.elementNum].market_cap_rank);
       setCoinPrice(coinsMCapSelect[props.elementNum].current_price);
@@ -62,13 +75,27 @@ const CoinAndGraph = (props) => {
       );
       setCoinCurrencyPair(coinAndExchangeSelect.coinCurrencyPair);
       setExchange(coinAndExchangeSelect.exchange);
-      //dispatch(coin);
     }
   });
-  // number = Math.floor(number * 100) / 100;
+
   React.useEffect(() => {
     cryptoBox();
-  }, [cryptoBox]);
+  }, [cryptoBox, isImageSmall]);
+
+  React.useEffect(() => {
+    getChartWidth();
+    if (width <= 648) {
+      setIsImageSmall(true);
+    } else setIsImageSmall(false);
+  }, [width]);
+
+  React.useEffect(() => {
+    window.addEventListener("resize", getChartWidth);
+  }, []);
+
+  const getChartWidth = () => {
+    setWidth(ref.current.offsetWidth);
+  };
 
   const chartInputObject = {
     coin: coinCurrencyPair,
@@ -88,11 +115,12 @@ const CoinAndGraph = (props) => {
 
   return (
     <Box
+      ref={ref}
       sx={{
         display: "flex",
-        height: "62vh",
+        flexWrap: width <= 648 ? "wrap" : undefined,
+        height: "65vh",
         minHeight: "435px",
-        width: "100%",
         backgroundColor: "gray",
         paddingLeft: "5px",
         paddingRight: "5px",
@@ -100,7 +128,8 @@ const CoinAndGraph = (props) => {
     >
       <Box
         sx={{
-          minWidth: "30vw",
+          minWidth: "320px",
+          width: "24.6vw",
         }}
       >
         <Paper
@@ -129,10 +158,10 @@ const CoinAndGraph = (props) => {
       </Box>
       <Box
         sx={{
-          minWidth: ".5vw",
+          minWidth: "1vh",
         }}
       />
-      <Box sx={{ width: "69.5vw" }}>
+      <Box sx={{ width: width <= 648 ? "320px" : "75.4vw", minWidth: "320px" }}>
         <Paper
           style={{
             height: "99%",
@@ -150,7 +179,7 @@ const CoinAndGraph = (props) => {
             chartInputObject={chartInputObject}
             chartInputObjectLastCandle={chartInputObectLastCandle}
           />
-          {/* <Button onClick={props.handleModalClick1}>Show Full Chart</Button>
+          {/* <Button onClick={props.handleModalClick1}>Show Full Chart</Button>                                                                                                                                              
             <Button onClick={props.handleModalClick2}>Add to Portfolio</Button>
             <Button onClick={props.handleModalClick3}>Exit</Button> */}
           {/* </Box> */}
