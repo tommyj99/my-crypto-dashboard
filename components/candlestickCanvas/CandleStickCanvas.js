@@ -592,7 +592,6 @@ const CandleStickCanvas = (props) => {
       draw(context);
     }
   });
-
   return <canvas ref={canvasRef} {...props} />;
 };
 

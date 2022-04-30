@@ -163,7 +163,7 @@ const CoinAndGraph = (props) => {
             Exchange: {exchange.toUpperCase()} 24hr
           </Typography>
           <MyChart
-            // text={coinCurrencyPair}
+            width={width}
             chartInputObject={chartInputObject}
             chartInputObjectLastCandle={chartInputObectLastCandle}
           />
