@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
 import { isExchanges } from "../../redux/slices/marketsSlice";
 import { setCoinAndExchangeStatus } from "../../redux/slices/marketsSlice";
+import { CommentsDisabledOutlined } from "@mui/icons-material";
 const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
   const coinStatusSelector = useSelector(selectCoinStatus);
@@ -111,6 +112,7 @@ const ExchangeMenu = (props) => {
                 >
                   Search new coin
                 </MenuItem>
+                {console.log("before map")}
                 {markets[0].result.map((item, id) => {
                   {
                     console.log("markets");
