@@ -4,6 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 let count = 0;
 const initialState = {
   markets: [],
+  filteredMarkets: [],
   coinAndExchange: {},
   coinAndExchangeStatus: false,
   isExchanges: false,
@@ -28,7 +29,7 @@ export const marketsSlice = createSlice({
       Object.assign(state, action.payload);
     },
     filterByUsd: (state, action) => {
-      state.markets = action.payload;
+      state.filteredMarkets = action.payload;
     },
     saveCoinAndExchange: (state, action) => {
       state.coinAndExchange = action.payload;

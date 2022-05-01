@@ -24,7 +24,7 @@ export const selectChartError = (state) => state.chartData.error;
 export const selectMarketsData = (state) => state.markets.markets;
 export const selectMarketsStatus = (state) => state.markets.status;
 export const selectMarketsError = (state) => state.markets.error;
-export const selectFilteredByUsd = (state) => state.markets.markets;
+export const selectFilteredByUsd = (state) => state.markets.filteredMarkets;
 export const selectCoinAndExchange = (state) => state.markets.coinAndExchange;
 export const selectCoinAndExchangeStatus = (state) =>
   state.markets.coinAndExchangeStatus;

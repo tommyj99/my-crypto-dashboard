@@ -29,7 +29,8 @@ const ExchangeMenu = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const anchorRef = React.useRef("exchange");
   const coinCurrencyPair = props.coin + "usd";
-  const markets = Object.values(usdPairsSelector);
+  //const [marketsFiltered, setMarketsFiltered] = React.useState();
+  const marketsFiltered = Object.values(usdPairsSelector);
   const [price, setPrice] = React.useState("");
   const dispatch = useDispatch();
 
@@ -112,11 +113,8 @@ const ExchangeMenu = (props) => {
                 >
                   Search new coin
                 </MenuItem>
-                {console.log("before map")}
-                {markets[0].result.map((item, id) => {
-                  {
-                    console.log("markets");
-                  }
+
+                {marketsFiltered.map((item, id) => {
                   if (item.pair === coinCurrencyPair && item.active === true) {
                     return (
                       <MenuItem
