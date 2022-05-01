@@ -156,25 +156,16 @@ export default function Home() {
   }
 
   function handleSearchOnEnter(Event) {
-    console.log("in soe");
     if (Event.charCode === 13) {
-      console.log("in char code 13");
       if (coinSymbol !== "" && coinList.length !== 0) {
-        console.log("in if not equal");
         setOpen(false);
-        console.log("set open false");
         dispatch(isExchanges(true));
-        console.log("dispatch is exchanges true");
         dispatch(coinClear());
-        console.log("dispatch coin clear");
         dispatch(setCoinAndExchangeStatus(false));
-        console.log("dispatch set caes false");
         setCoin(coinSymbol);
-        console.log("set coin symbol");
         coinsMCapSelect.forEach((item) => {
           if (coinSymbol === item.symbol) {
             setElementNum(item.market_cap_rank - 1);
-            console.log("forEach");
           }
         });
         setCoinSymbol("");
