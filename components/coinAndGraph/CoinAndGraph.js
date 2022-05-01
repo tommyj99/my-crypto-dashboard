@@ -81,7 +81,9 @@ const CoinAndGraph = (props) => {
   }, []);
 
   const getChartWidth = () => {
-    setWidth(ref.current.offsetWidth);
+    if (ref.current !== null) {
+      setWidth(ref.current.offsetWidth);
+    }
   };
 
   const chartInputObject = {
