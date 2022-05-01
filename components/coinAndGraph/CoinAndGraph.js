@@ -18,7 +18,6 @@ import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
 const CoinAndGraph = (props) => {
   const dispatch = useDispatch();
   const ref = useRef();
-  const coinStatusSelector = useSelector(selectCoinStatus);
   const coinsMCapSelect = useSelector(selectCoinsMCap);
   const coinAndExchangeSelect = useSelector(selectCoinAndExchange);
   const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
