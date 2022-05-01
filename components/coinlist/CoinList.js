@@ -16,10 +16,11 @@ const CoinList = () => {
   const coinsMCapErrorMessageSelector = useSelector(selectCoinsMCapError);
   let coinNumber = 1;
 
-  const items = coinsMCapSelector.map((coinsMCap) => {
+  const items = coinsMCapSelector.map((coinsMCap, index) => {
     const imageMed = coinsMCap.image.replace("large", "small");
     return (
       <div
+        key={index}
         style={{
           paddingTop: "5px",
           paddingBottom: "5px",
