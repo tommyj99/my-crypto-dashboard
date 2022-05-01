@@ -180,6 +180,7 @@ export default function Home() {
         setCoinSymbol("");
       }
     }
+    console.log("end");
   }
 
   function handleClick(Event) {
