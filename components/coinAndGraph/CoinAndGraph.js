@@ -149,7 +149,13 @@ const CoinAndGraph = (props) => {
           minWidth: "1vh",
         }}
       />
-      <Box sx={{ width: width <= 648 ? "320px" : "75.4vw", minWidth: "320px" }}>
+      <Box
+        sx={{
+          width: width <= 648 ? "320px" : "75.4vw",
+          minWidth: "320px",
+          minHeight: "260px",
+        }}
+      >
         <Paper
           style={{
             height: "99%",

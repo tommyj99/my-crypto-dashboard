@@ -29,31 +29,6 @@ const MyChart = (props) => {
     dispatch(fetchOhlcModifiableData(props.chartInputObjectLastCandle));
   }, [props.chartInputObject.coin, props.chartInputObject.exchange]);
 
-  // React.useEffect(() => {
-  //   console.log("myChart: ", props.width);
-  //   setSkeletonHeight(props.width * 0.5);
-  //   console.log("sh: ", skeletonHeight);
-  // }, [props.width]);
-
-  // const ChartSkeleton = () => {
-  //   return (
-  //     <div style={{ height: "100%" }}>
-  //       <Skeleton
-  //         sx={{
-  //           bgcolor: "white",
-  //           marginTop: "1%",
-  //           marginLeft: "10%",
-  //           marginRight: "10%",
-  //           borderRadius: "10px",
-  //         }}
-  //         variant="rectangular"
-  //         width={props.width}
-  //         height={skeletonHeight}
-  //       />
-  //     </div>
-  //   );
-  // };
-
   if (
     ohlcStatusSelector === "succeeded" &&
     ohlcModifiableStatusSelector === "succeeded"
@@ -74,7 +49,6 @@ const MyChart = (props) => {
             height: "100%",
           }}
         >
-          {/* <Spinner /> */}
           <CandleStickCanvas
             style={{
               height: "100%",
@@ -104,13 +78,24 @@ const MyChart = (props) => {
       >
         <div
           style={{
-            display: "flex",
             height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
           }}
         >
-          <Spinner />
+          <Skeleton
+            sx={{
+              bgcolor: "midnightblue",
+              display: "flex",
+              height: "95%",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "10%",
+              marginRight: "10%",
+              borderRadius: "10px",
+            }}
+            variant="rectangle"
+            width="250"
+            height="250"
+          />
         </div>
       </Box>
     );
