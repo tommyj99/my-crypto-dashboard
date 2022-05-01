@@ -173,8 +173,8 @@ export default function Home() {
         console.log("set coin symbol");
         coinsMCapSelect.forEach((item) => {
           if (coinSymbol === item.symbol) {
-            console.log("forEach");
             setElementNum(item.market_cap_rank - 1);
+            console.log("forEach");
           }
         });
         setCoinSymbol("");
