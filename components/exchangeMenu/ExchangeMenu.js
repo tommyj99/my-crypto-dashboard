@@ -10,7 +10,6 @@ import {
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import * as React from "react";
 import ArrowDropDownCircle from "@mui/icons-material/ArrowDropDownCircle";
-import HomeIcon from "@mui/icons-material/Home";
 import {
   selectFilteredByUsd,
   selectCoinStatus,
@@ -20,7 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
 import { isExchanges } from "../../redux/slices/marketsSlice";
 import { setCoinAndExchangeStatus } from "../../redux/slices/marketsSlice";
-import { CommentsDisabledOutlined } from "@mui/icons-material";
 const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
   const coinStatusSelector = useSelector(selectCoinStatus);
@@ -59,7 +57,12 @@ const ExchangeMenu = (props) => {
   };
 
   const handleExchangeButtonClick = (Event) => {
-    setOpen(!open);
+    // if (open) {
+    //   setOpen(!open);
+    // } else if (!open) {
+    //   setOpen(open);
+    // }
+    setOpen((open) => !open);
     setAnchorEl(Event.currentTarget);
   };
 
@@ -102,10 +105,8 @@ const ExchangeMenu = (props) => {
                   style={{
                     backgroundColor: "#fff8dc",
                   }}
-                  // autoFocusItem={open}
                   id="composition-menu"
                   aria-labelledby="exchange-button"
-                  // onKeyDown={handleListKeyDown}
                 >
                   <MenuItem
                     style={{ color: "magenta" }}
