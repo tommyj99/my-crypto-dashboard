@@ -62,8 +62,8 @@ const ExchangeMenu = (props) => {
     // } else if (!open) {
     //   setOpen(open);
     // }
-    // setOpen(!open);
-    setOpen((open) => !open);
+    setOpen(!open);
+    // setOpen((open) => !open);
     setAnchorEl(Event.currentTarget);
   };
 
