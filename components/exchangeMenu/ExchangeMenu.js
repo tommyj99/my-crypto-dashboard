@@ -38,11 +38,11 @@ const ExchangeMenu = (props) => {
     anchorRef.current.click();
   }, [anchorRef]);
 
-  React.useEffect(() => {
-    if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
-      exchangeAutoClick();
-    }
-  }, [exchangeAutoClick, coinStatusSelector]);
+  // React.useEffect(() => {
+  //   if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
+  //     exchangeAutoClick();
+  //   }
+  // }, [exchangeAutoClick, coinStatusSelector]);
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {
@@ -53,7 +53,6 @@ const ExchangeMenu = (props) => {
         });
       }
       dispatch(saveCoinAndExchange(coinObj()));
-      //dispatch(setCoinAndExchangeStatus(false));
     }
     setOpen(false);
     setAnchorEl(null);
@@ -120,8 +119,6 @@ const ExchangeMenu = (props) => {
                       item.pair === coinCurrencyPair &&
                       item.active === true
                     ) {
-                      console.log("ip: ", item.pair);
-                      console.log("iid: ", item.id);
                       return (
                         <MenuItem
                           style={{ color: "blue" }}
