@@ -267,6 +267,7 @@ export default function Home() {
                           backgroundColor: "#fff8dc",
                         }}
                       >
+                        {console.log("coinList: ", coinList)}
                         {coinList.map((listItem, index) => (
                           <MenuItem
                             style={{ color: "blue" }}
