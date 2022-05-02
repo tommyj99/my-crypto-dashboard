@@ -28,7 +28,7 @@ const ExchangeMenu = (props) => {
   const anchorRef = React.useRef("exchange");
   const coinCurrencyPair = props.coin + "usd";
   //const [marketsFiltered, setMarketsFiltered] = React.useState();
-  const marketsFiltered = Object.values(usdPairsSelector);
+  const marketsFiltered = usdPairsSelector;
   const [price, setPrice] = React.useState("");
   const dispatch = useDispatch();
 
