@@ -150,9 +150,11 @@ export default function Home() {
   // SECTION handlers
   function handleChange(Event) {
     setCoinList([]);
-    setCoinSymbol(Event.target.value);
-    setAnchorEl(Event.currentTarget);
-    setOpen(true);
+    if (Event.target.value !== undefined) {
+      setCoinSymbol(Event.target.value.toLowerCase());
+      setAnchorEl(Event.currentTarget);
+      setOpen(true);
+    }
   }
 
   function handleSearchOnEnter(Event) {
