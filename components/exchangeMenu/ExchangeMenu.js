@@ -115,7 +115,7 @@ const ExchangeMenu = (props) => {
                   >
                     Search new coin
                   </MenuItem>
-
+                  {console.log("mf: ", marketsFiltered)}
                   {marketsFiltered.map((item, id) => {
                     if (
                       item.pair === coinCurrencyPair &&
