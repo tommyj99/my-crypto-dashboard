@@ -184,7 +184,7 @@ export default function Home() {
       console.log("event: ", Event.currentTarget.innerText);
       setCoin(Event.currentTarget.innerText.toLowerCase());
       coinsMCapSelect.forEach((item) => {
-        if (coinSymbol === item.symbol) {
+        if (coin === item.symbol) {
           setElementNum(item.market_cap_rank - 1);
         }
       });
