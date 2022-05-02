@@ -76,65 +76,73 @@ const ExchangeMenu = (props) => {
     setAnchorEl(null);
   }
 
-  return (
-    <Stack direction="row" spacing={2}>
-      <div>
-        <Button
-          style={{ backgroundColor: "#fff8dc", color: "blue" }}
-          name="exchange"
-          id="exchange-button"
-          onClick={handleExchangeButtonClick}
-          ref={anchorRef}
-          variant="contained"
-        >
-          Choose Exchange
-          <ArrowDropDownCircle style={{ marginLeft: "5px", color: "blue" }} />
-        </Button>
-        <Popper
-          open={open}
-          anchorEl={anchorEl}
-          role={undefined}
-          placement="bottom-end"
-        >
-          <Paper>
-            <ClickAwayListener onClickAway={handleClickAway}>
-              <MenuList
-                style={{
-                  backgroundColor: "#fff8dc",
-                }}
-                // autoFocusItem={open}
-                id="composition-menu"
-                aria-labelledby="exchange-button"
-                // onKeyDown={handleListKeyDown}
-              >
-                <MenuItem
-                  style={{ color: "magenta" }}
-                  onClick={handleNewSearchClick}
+  if (marketsFiltered.length !== 0) {
+    return (
+      <Stack direction="row" spacing={2}>
+        <div>
+          <Button
+            style={{ backgroundColor: "#fff8dc", color: "blue" }}
+            name="exchange"
+            id="exchange-button"
+            onClick={handleExchangeButtonClick}
+            ref={anchorRef}
+            variant="contained"
+          >
+            Choose Exchange
+            <ArrowDropDownCircle style={{ marginLeft: "5px", color: "blue" }} />
+          </Button>
+          <Popper
+            open={open}
+            anchorEl={anchorEl}
+            role={undefined}
+            placement="bottom-end"
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={handleClickAway}>
+                <MenuList
+                  style={{
+                    backgroundColor: "#fff8dc",
+                  }}
+                  // autoFocusItem={open}
+                  id="composition-menu"
+                  aria-labelledby="exchange-button"
+                  // onKeyDown={handleListKeyDown}
                 >
-                  Search new coin
-                </MenuItem>
+                  <MenuItem
+                    style={{ color: "magenta" }}
+                    onClick={handleNewSearchClick}
+                  >
+                    Search new coin
+                  </MenuItem>
 
-                {marketsFiltered.map((item, id) => {
-                  if (item.pair === coinCurrencyPair && item.active === true) {
-                    return (
-                      <MenuItem
-                        style={{ color: "blue" }}
-                        key={id}
-                        onClick={handleExchangePopperClick}
-                      >
-                        {item.exchange}
-                      </MenuItem>
-                    );
-                  }
-                  return null;
-                })}
-              </MenuList>
-            </ClickAwayListener>
-          </Paper>
-        </Popper>
-      </div>
-    </Stack>
-  );
+                  {marketsFiltered.map((item, id) => {
+                    if (
+                      item.pair === coinCurrencyPair &&
+                      item.active === true
+                    ) {
+                      console.log("ip: ", item.pair);
+                      console.log("iid: ", item.id);
+                      return (
+                        <MenuItem
+                          style={{ color: "blue" }}
+                          key={id}
+                          onClick={handleExchangePopperClick}
+                        >
+                          {item.exchange}
+                        </MenuItem>
+                      );
+                    }
+                    return null;
+                  })}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Popper>
+        </div>
+      </Stack>
+    );
+  }
+  return null;
 };
 
 export default ExchangeMenu;
