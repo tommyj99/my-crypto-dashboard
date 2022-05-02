@@ -181,6 +181,7 @@ export default function Home() {
     dispatch(coinClear());
     dispatch(setCoinAndExchangeStatus(false));
     if (Event.currentTarget.innerText !== undefined) {
+      console.log("event: ", Event.currentTarget.innerText);
       setCoin(Event.currentTarget.innerText.toLowerCase());
       coinsMCapSelect.forEach((item) => {
         if (coinSymbol === item.symbol) {
