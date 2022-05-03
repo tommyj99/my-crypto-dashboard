@@ -183,12 +183,12 @@ export default function Home() {
       dispatch(coinClear());
       dispatch(setCoinAndExchangeStatus(false));
       // if (Event.currentTarget.innerText !== undefined) {
-      setCoin(Event.currentTarget.innerText.toLowerCase());
-      console.log("coin: ", Event.currentTarget.innerText.toLowerCase());
+      setCoin(Event.currentTarget.innerText.toLowerCase().toString());
       coinsMCapSelect.forEach((item) => {
-        if (Event.currentTarget.innerText.toLowerCase() === item.symbol) {
+        if (
+          Event.currentTarget.innerText.toLowerCase().toSring() === item.symbol
+        ) {
           setElementNum(item.market_cap_rank - 1);
-          console.log("elementNum: ", item.market_cap_rank - 1);
         }
       });
       setCoinSymbol("");
