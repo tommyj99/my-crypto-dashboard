@@ -117,10 +117,9 @@ const ExchangeMenu = (props) => {
                   </MenuItem>
                   {marketsFiltered.map((item, id) => {
                     console.log("markets filtered: ", item);
-                    if (
-                      item.pair === coinCurrencyPair &&
-                      item.active === true
-                    ) {
+                    console.log("item pair: ", item.pair);
+                    console.log("item.active: ", item.active);
+                    if (item.pair === coinCurrencyPair && item.active) {
                       return (
                         <MenuItem
                           style={{ color: "blue" }}
