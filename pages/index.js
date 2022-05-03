@@ -178,16 +178,14 @@ export default function Home() {
 
   function handleClick(Event) {
     if (Event.currentTarget.innerText !== undefined && coinList.length !== 0) {
+      let coinClicked = Event.currentTarget.innerText.toLowerCase().trim();
       setOpen(false);
       dispatch(isExchanges(true));
       dispatch(coinClear());
       dispatch(setCoinAndExchangeStatus(false));
-      // if (Event.currentTarget.innerText !== undefined) {
-      setCoin(Event.currentTarget.innerText.toLowerCase().toString());
+      setCoin(coinClicked);
       coinsMCapSelect.forEach((item) => {
-        if (
-          Event.currentTarget.innerText.toLowerCase().toSring() === item.symbol
-        ) {
+        if (coinClicked === item.symbol) {
           setElementNum(item.market_cap_rank - 1);
         }
       });

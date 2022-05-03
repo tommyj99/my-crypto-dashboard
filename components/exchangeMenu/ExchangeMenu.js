@@ -116,9 +116,6 @@ const ExchangeMenu = (props) => {
                     Search new coin
                   </MenuItem>
                   {marketsFiltered.map((item, id) => {
-                    console.log("markets filtered: ", item);
-                    console.log("item pair: ", item.pair);
-                    console.log("item.active: ", item.active);
                     if (item.pair === coinCurrencyPair && item.active) {
                       return (
                         <MenuItem
