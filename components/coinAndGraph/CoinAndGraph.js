@@ -109,7 +109,7 @@ const CoinAndGraph = (props) => {
         display: "flex",
         flexWrap: width <= 648 ? "wrap" : undefined,
         height: "65vh",
-        minHeight: "435px",
+        minHeight: "510px",
         backgroundColor: "gray",
         paddingLeft: "5px",
         paddingRight: "5px",
@@ -154,7 +154,7 @@ const CoinAndGraph = (props) => {
         sx={{
           width: width <= 648 ? "320px" : "75.4vw",
           minWidth: "320px",
-          minHeight: "340px", // check this
+          minHeight: "260px", // check this
         }}
       >
         <Paper
