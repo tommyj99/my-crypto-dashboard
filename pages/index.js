@@ -177,11 +177,12 @@ export default function Home() {
   }
 
   function handleClick(Event) {
-    setOpen(false);
-    dispatch(isExchanges(true));
-    dispatch(coinClear());
-    dispatch(setCoinAndExchangeStatus(false));
     if (Event.currentTarget.innerText !== undefined) {
+      setOpen(false);
+      dispatch(isExchanges(true));
+      dispatch(coinClear());
+      dispatch(setCoinAndExchangeStatus(false));
+      // if (Event.currentTarget.innerText !== undefined) {
       console.log("event: ", Event.currentTarget.innerText);
       setCoin(Event.currentTarget.innerText.toLowerCase());
       console.log("cmcs: ", coinsMCapSelect);
