@@ -32,6 +32,7 @@ const ExchangeMenu = (props) => {
   const [price, setPrice] = React.useState("");
   const dispatch = useDispatch();
 
+  console.log("usd pairs: ", usdPairsSelector);
   const exchangeAutoClick = React.useCallback(() => {
     anchorRef.current.click();
   }, [anchorRef.current]);
