@@ -183,9 +183,8 @@ export default function Home() {
       dispatch(coinClear());
       dispatch(setCoinAndExchangeStatus(false));
       // if (Event.currentTarget.innerText !== undefined) {
-      console.log("event: ", Event.currentTarget.innerText);
       setCoin(Event.currentTarget.innerText.toLowerCase());
-      console.log("cmcs: ", coinsMCapSelect);
+      console.log("coin: ", Event.currentTarget.innerText.toLowerCase());
       coinsMCapSelect.forEach((item) => {
         if (Event.currentTarget.innerText.toLowerCase() === item.symbol) {
           setElementNum(item.market_cap_rank - 1);
@@ -206,6 +205,7 @@ export default function Home() {
 
   const ExchangeButton = () => {
     if (isExchangesSelector && marketsStatusSelector === "succeeded") {
+      console.log("coinEx: ", coin);
       return <ExchangeMenu coin={coin} />;
     }
     return null;

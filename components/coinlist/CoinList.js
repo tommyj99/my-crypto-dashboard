@@ -27,15 +27,17 @@ const CoinList = () => {
     });
   }, []);
 
-  React.useEffect(() => {
-    console.log("tfb: ", topFifty);
-    topFifty.sort(function (a, b) {
-      return a.market_cap_rank < b.market_cap_rank;
-    });
-    console.log("tfa: ", topFifty);
-  });
+  function sortTopFifty(a, b) {
+    return a.market_cap_rank < b.market_cap_rank;
+  }
 
-  const items = topFifty.map((coinsMCap, index) => {
+  // React.useEffect(() => {
+  //   topFifty.sort(function (a, b) {
+  //     return a.market_cap_rank < b.market_cap_rank;
+  //   });
+  // });
+
+  const items = topFifty.sort(sortTopFifty).map((coinsMCap, index) => {
     const imageMed = coinsMCap.image.replace("large", "small");
     return (
       <div
