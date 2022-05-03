@@ -14,9 +14,28 @@ const CoinList = () => {
   const coinsMCapSelector = useSelector(selectCoinsMCap);
   const coinsMCapStatusSelector = useSelector(selectCoinsMCapStatus);
   const coinsMCapErrorMessageSelector = useSelector(selectCoinsMCapError);
+  const [topFifty, setTopFifty] = React.useState([]);
   let coinNumber = 1;
 
-  const items = coinsMCapSelector.map((coinsMCap, index) => {
+  // take only top 50
+  React.useEffect(() => {
+    setTopFifty([]);
+    coinsMCapSelector.forEach((item) => {
+      if (item.market_cap_rank <= 50) {
+        setTopFifty((topFifty) => [...topFifty, item]);
+      }
+    });
+  }, []);
+
+  React.useEffect(() => {
+    console.log("tfb: ", topFifty);
+    topFifty.sort(function (a, b) {
+      return a.market_cap_rank < b.market_cap_rank;
+    });
+    console.log("tfa: ", topFifty);
+  });
+
+  const items = topFifty.map((coinsMCap, index) => {
     const imageMed = coinsMCap.image.replace("large", "small");
     return (
       <div
@@ -29,7 +48,7 @@ const CoinList = () => {
         }}
       >
         <CarouselItem
-          rank={coinNumber++}
+          rank={coinsMCap.market_cap_rank}
           coin={coinsMCap.name}
           symbol={coinsMCap.symbol}
           image={<img src={imageMed} />}

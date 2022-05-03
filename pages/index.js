@@ -89,6 +89,7 @@ export default function Home() {
   const dispatch = useDispatch();
   // selectors
   const coinsAllSelector = useSelector(selectCoinsAll);
+  const coinsOneThousandSelector = useSelector(selectCoinsMCap);
   const marketsSelector = useSelector(selectMarketsData);
   const marketsStatusSelector = useSelector(selectMarketsStatus);
   const isExchangesSelector = useSelector(selectIsExchanges);
@@ -120,14 +121,14 @@ export default function Home() {
   //Called when search bar is being populated
   React.useEffect(() => {
     if (coinSymbol !== "") {
-      coinsAllSelector.forEach((result) => {
+      coinsOneThousandSelector.forEach((result) => {
         if (result.symbol.toLowerCase().startsWith(coinSymbol.toLowerCase())) {
           // populate symbol list
           setCoinList((prevArray) => [...prevArray, result.symbol]);
         }
       });
     }
-  }, [coinSymbol, coinsAllSelector]);
+  }, [coinSymbol, coinsOneThousandSelector]);
 
   React.useEffect(() => {
     if (marketsStatusSelector === "succeeded" && usdFilter === false) {
@@ -183,9 +184,11 @@ export default function Home() {
     if (Event.currentTarget.innerText !== undefined) {
       console.log("event: ", Event.currentTarget.innerText);
       setCoin(Event.currentTarget.innerText.toLowerCase());
+      console.log("cmcs: ", coinsMCapSelect);
       coinsMCapSelect.forEach((item) => {
-        if (coin === item.symbol) {
+        if (Event.currentTarget.innerText.toLowerCase() === item.symbol) {
           setElementNum(item.market_cap_rank - 1);
+          console.log("elementNum: ", item.market_cap_rank - 1);
         }
       });
       setCoinSymbol("");
