@@ -37,13 +37,13 @@ const ExchangeMenu = (props) => {
     anchorRef.current.click();
   }, [anchorRef.current]);
 
-  React.useEffect(() => {
-    console.log("css: ", coinStatusSelector);
-    console.log("caess: ", coinAndExchangeStatusSelect);
-    if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
-      exchangeAutoClick();
-    }
-  }, [exchangeAutoClick, coinStatusSelector]);
+  // React.useEffect(() => {
+  //   console.log("css: ", coinStatusSelector);
+  //   console.log("caess: ", coinAndExchangeStatusSelect);
+  //   if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
+  //     exchangeAutoClick();
+  //   }
+  // }, [exchangeAutoClick, coinStatusSelector]);
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {
