@@ -154,7 +154,7 @@ const CoinAndGraph = (props) => {
         sx={{
           width: width <= 648 ? "320px" : "75.4vw",
           minWidth: "320px",
-          minHeight: "300px", // check this
+          minHeight: "340px", // check this
         }}
       >
         <Paper
