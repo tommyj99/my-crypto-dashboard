@@ -177,7 +177,7 @@ export default function Home() {
   }
 
   function handleClick(Event) {
-    if (Event.currentTarget.innerText !== undefined) {
+    if (Event.currentTarget.innerText !== undefined && coinList.length !== 0) {
       setOpen(false);
       dispatch(isExchanges(true));
       dispatch(coinClear());
