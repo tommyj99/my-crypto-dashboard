@@ -32,18 +32,15 @@ const ExchangeMenu = (props) => {
   const [price, setPrice] = React.useState("");
   const dispatch = useDispatch();
 
-  console.log("usd pairs: ", usdPairsSelector);
   const exchangeAutoClick = React.useCallback(() => {
     anchorRef.current.click();
   }, [anchorRef.current]);
 
-  // React.useEffect(() => {
-  //   console.log("css: ", coinStatusSelector);
-  //   console.log("caess: ", coinAndExchangeStatusSelect);
-  //   if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
-  //     exchangeAutoClick();
-  //   }
-  // }, [exchangeAutoClick, coinStatusSelector]);
+  React.useEffect(() => {
+    if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
+      exchangeAutoClick();
+    }
+  }, [exchangeAutoClick, coinStatusSelector]);
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {
@@ -118,13 +115,12 @@ const ExchangeMenu = (props) => {
                   >
                     Search new coin
                   </MenuItem>
-                  {/* {console.log("running", marketsFiltered)} */}
                   {marketsFiltered.map((item, id) => {
+                    console.log("markets filtered: ", item);
                     if (
                       item.pair === coinCurrencyPair &&
                       item.active === true
                     ) {
-                      console.log("markets filtered: ", item);
                       return (
                         <MenuItem
                           style={{ color: "blue" }}
