@@ -33,6 +33,7 @@ const ExchangeMenu = (props) => {
   const dispatch = useDispatch();
 
   const exchangeAutoClick = React.useCallback(() => {
+    console.log("auto click");
     anchorRef.current.click();
   }, [anchorRef.current]);
 
