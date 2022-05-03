@@ -76,7 +76,6 @@ const CoinList = () => {
       </div>
     );
   } else if (coinsMCapStatusSelector === "succeeded") {
-    console.log("items: ", items);
     return (
       <div>
         <AliceCarousel

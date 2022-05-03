@@ -203,7 +203,6 @@ export default function Home() {
 
   const ExchangeButton = () => {
     if (isExchangesSelector && marketsStatusSelector === "succeeded") {
-      console.log("coinEx: ", coin);
       return <ExchangeMenu coin={coin} />;
     }
     return null;

@@ -152,8 +152,8 @@ const CoinAndGraph = (props) => {
       />
       <Box
         sx={{
-          width: width <= 648 ? "320px" : "75.4vw",
-          minWidth: "320px",
+          width: width <= 648 ? "360px" : "75.4vw",
+          minWidth: "360px",
           minHeight: "260px", // check this
         }}
       >
