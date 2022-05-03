@@ -37,6 +37,8 @@ const ExchangeMenu = (props) => {
   }, [anchorRef.current]);
 
   React.useEffect(() => {
+    console.log("css: ", coinStatusSelector);
+    console.log("caess: ", coinAndExchangeStatusSelect);
     if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
       exchangeAutoClick();
     }
@@ -121,7 +123,7 @@ const ExchangeMenu = (props) => {
                       item.pair === coinCurrencyPair &&
                       item.active === true
                     ) {
-                      // console.log("markets filtered: ", item);
+                      console.log("markets filtered: ", item);
                       return (
                         <MenuItem
                           style={{ color: "blue" }}
