@@ -28,14 +28,8 @@ const CoinList = () => {
   }, []);
 
   function sortTopFifty(a, b) {
-    return a.market_cap_rank < b.market_cap_rank;
+    return a.market_cap_rank > b.market_cap_rank;
   }
-
-  // React.useEffect(() => {
-  //   topFifty.sort(function (a, b) {
-  //     return a.market_cap_rank < b.market_cap_rank;
-  //   });
-  // });
 
   const items = topFifty.sort(sortTopFifty).map((coinsMCap, index) => {
     const imageMed = coinsMCap.image.replace("large", "small");
@@ -61,7 +55,7 @@ const CoinList = () => {
   });
 
   const responsive = {
-    50: {
+    1: {
       items: 4,
     },
   };
@@ -87,6 +81,7 @@ const CoinList = () => {
           items={items}
           autoPlay
           disableDotsControls
+          disableButtonsControls
         />
       </div>
     );

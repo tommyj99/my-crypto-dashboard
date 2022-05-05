@@ -38,8 +38,6 @@ const ExchangeMenu = (props) => {
   }, [anchorRef.current]);
 
   React.useEffect(() => {
-    console.log("css: ", coinStatusSelector);
-    console.log("caess: ", coinAndExchangeStatusSelect);
     if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
       exchangeAutoClick();
     }
@@ -61,6 +59,7 @@ const ExchangeMenu = (props) => {
 
   const handleExchangeButtonClick = (Event) => {
     setOpen((open) => !open);
+    console.log("open: ", open);
     setAnchorEl(Event.currentTarget);
   };
 
@@ -114,8 +113,6 @@ const ExchangeMenu = (props) => {
                   </MenuItem>
                   {marketsFiltered.map((item, id) => {
                     if (item.pair === coinCurrencyPair && item.active) {
-                      console.log("item pair: ", item.pair);
-                      console.log("item active: ", item.active);
                       return (
                         <MenuItem
                           style={{ color: "blue" }}
