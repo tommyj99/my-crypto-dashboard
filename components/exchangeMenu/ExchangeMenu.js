@@ -23,7 +23,7 @@ const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
   const coinStatusSelector = useSelector(selectCoinStatus);
   const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
-  const [open, setOpen] = React.useState(true); // false originally
+  const [open, setOpen] = React.useState(false); // false originally
   const [anchorEl, setAnchorEl] = React.useState(null);
   const anchorRef = React.useRef("exchange-button");
   const coinCurrencyPair = props.coin + "usd";
@@ -59,7 +59,7 @@ const ExchangeMenu = (props) => {
 
   const handleExchangeButtonClick = (Event) => {
     setOpen((open) => !open);
-    console.log("open: ", open);
+    console.log("open: ", !open);
     setAnchorEl(Event.currentTarget);
   };
 
@@ -83,6 +83,7 @@ const ExchangeMenu = (props) => {
             style={{ backgroundColor: "#fff8dc", color: "blue" }}
             name="exchange"
             id="exchange-button"
+            //onMouseUp={handleExchangeButtonClick}
             onClick={handleExchangeButtonClick}
             ref={anchorRef}
             variant="contained"
