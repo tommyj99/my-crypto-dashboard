@@ -23,7 +23,7 @@ const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
   const coinStatusSelector = useSelector(selectCoinStatus);
   const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true); // false originally
   const [anchorEl, setAnchorEl] = React.useState(null);
   const anchorRef = React.useRef("exchange-button");
   const coinCurrencyPair = props.coin + "usd";
