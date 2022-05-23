@@ -41,7 +41,7 @@ const ExchangeMenu = (props) => {
     if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
       exchangeAutoClick();
     }
-  }, [coinStatusSelector]);
+  }, [exchangeAutoClick, coinStatusSelector]);
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {

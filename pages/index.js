@@ -50,7 +50,7 @@ const Search = styled("div")(({ theme }) => ({
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
   marginLeft: 0,
-  width: "100%",
+  width: "50%",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(1),
     width: "auto",
@@ -238,7 +238,7 @@ export default function Home() {
                   sx={{
                     color: "#fff8dc",
                     flexGrow: 1,
-                    display: { xs: "none", sm: "block" },
+                    // display: { xs: "none", sm: "block" },
                   }}
                 >
                   CryptoMon
