@@ -101,6 +101,7 @@ export default function Home() {
   const coinAndExchangeStatusSelect = useSelector(selectCoinAndExchangeStatus);
   // hooks
   const [coinSymbol, setCoinSymbol] = React.useState("");
+  const [coinSymbolCopy, setCoinSymbolCopy] = React.useState("");
   const [coinList, setCoinList] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -187,6 +188,7 @@ export default function Home() {
             }
           });
         } else {
+          setCoinSymbolCopy(coinSymbol);
           setDialogOpen(true);
         }
       }
@@ -234,8 +236,8 @@ export default function Home() {
           }}
         >
           <Typography sx={{ p: 2 }}>
-            Coin &quot;{coinSymbol}&quot; not found! Please check spelling and
-            retry.
+            Coin &quot;{coinSymbolCopy}&quot; not found! Please check spelling
+            and retry.
           </Typography>
         </Popover>
       );
