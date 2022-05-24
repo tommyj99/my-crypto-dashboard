@@ -13,6 +13,8 @@ import {
   Popper,
   MenuList,
   MenuItem,
+  Popover,
+  Button,
 } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -101,10 +103,12 @@ export default function Home() {
   const [coinSymbol, setCoinSymbol] = React.useState("");
   const [coinList, setCoinList] = React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [usdFilter, setUsdFilter] = React.useState(false);
   const [coin, setCoin] = React.useState("");
   const [elementNum, setElementNum] = React.useState(0);
+  let coinMatch = false;
 
   React.useEffect(() => {
     dispatch(fetchAllCoins());
@@ -158,20 +162,35 @@ export default function Home() {
     }
   }
 
+  const handleClose = () => {
+    setDialogOpen(false);
+    setCoinSymbol("");
+  };
+
   function handleSearchOnEnter(Event) {
     if (Event.charCode === 13) {
-      if (coinSymbol !== "" && coinList.length !== 0) {
-        setOpen(false);
-        dispatch(isExchanges(true));
-        dispatch(coinClear());
-        dispatch(setCoinAndExchangeStatus(false));
-        setCoin(coinSymbol);
-        coinsMCapSelect.forEach((item) => {
-          if (coinSymbol === item.symbol) {
-            setElementNum(item.market_cap_rank - 1);
+      if (coinSymbol !== "") {
+        coinList.forEach((item) => {
+          if (item === coinSymbol) {
+            console.log("true");
+            coinMatch = true;
           }
         });
-        setCoinSymbol("");
+        setOpen(false);
+        dispatch(coinClear());
+        if (coinMatch === true) {
+          dispatch(isExchanges(true));
+          dispatch(setCoinAndExchangeStatus(false));
+          setCoin(coinSymbol);
+          coinsMCapSelect.forEach((item) => {
+            if (coinSymbol === item.symbol) {
+              setElementNum(item.market_cap_rank - 1);
+            }
+          });
+          setCoinSymbol("");
+        } else {
+          setDialogOpen(true);
+        }
       }
     }
   }
@@ -189,7 +208,6 @@ export default function Home() {
           setElementNum(item.market_cap_rank - 1);
         }
       });
-      setCoinSymbol("");
     }
   }
 
@@ -204,10 +222,27 @@ export default function Home() {
   const ExchangeButton = () => {
     if (isExchangesSelector && marketsStatusSelector === "succeeded") {
       return <ExchangeMenu coin={coin} />;
+    } else if (coinMatch === false) {
+      return (
+        <Popover
+          open={dialogOpen}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+        >
+          <Typography sx={{ p: 2 }}>
+            Coin "{coinSymbol}" not found! Please check spelling and retry.
+          </Typography>
+        </Popover>
+      );
     }
     return null;
   };
   if (coinsMCapSelectStatus === "succeeded") {
+    console.log("hello");
     return (
       <div className={styles.container}>
         <Head>
@@ -244,7 +279,6 @@ export default function Home() {
                   CryptoMon
                 </Typography>
                 <ExchangeButton />
-                {/* <ExchangeMenu /> */}
                 <Search hidden={isExchangesSelector} data-testid="search-bar">
                   <SearchIconWrapper aria-label="search-icon">
                     <SearchRoundedIcon />
