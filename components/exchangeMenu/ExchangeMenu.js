@@ -34,7 +34,7 @@ const ExchangeMenu = (props) => {
 
   const exchangeAutoClick = React.useCallback(() => {
     anchorRef.current.click();
-  }, [anchorRef.current]);
+  }, [anchorRef]);
 
   React.useEffect(() => {
     if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
