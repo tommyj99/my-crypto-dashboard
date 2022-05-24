@@ -186,11 +186,11 @@ export default function Home() {
               setElementNum(item.market_cap_rank - 1);
             }
           });
-          setCoinSymbol("");
         } else {
           setDialogOpen(true);
         }
       }
+      setCoinSymbol("");
     }
   }
 
@@ -207,6 +207,7 @@ export default function Home() {
           setElementNum(item.market_cap_rank - 1);
         }
       });
+      setCoinSymbol("");
     }
   }
 
