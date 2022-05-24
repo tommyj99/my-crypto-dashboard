@@ -172,7 +172,6 @@ export default function Home() {
       if (coinSymbol !== "") {
         coinList.forEach((item) => {
           if (item === coinSymbol) {
-            console.log("true");
             coinMatch = true;
           }
         });
@@ -242,7 +241,6 @@ export default function Home() {
     return null;
   };
   if (coinsMCapSelectStatus === "succeeded") {
-    console.log("hello");
     return (
       <div className={styles.container}>
         <Head>
