@@ -19,6 +19,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
 import { isExchanges } from "../../redux/slices/marketsSlice";
 import { setCoinAndExchangeStatus } from "../../redux/slices/marketsSlice";
+import { useRef } from "react";
+
 const ExchangeMenu = (props) => {
   const usdPairsSelector = useSelector(selectFilteredByUsd);
   const coinStatusSelector = useSelector(selectCoinStatus);
@@ -27,21 +29,20 @@ const ExchangeMenu = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const anchorRef = React.useRef("exchange-button");
   const coinCurrencyPair = props.coin + "usd";
-  //const [marketsFiltered, setMarketsFiltered] = React.useState();
   const marketsFiltered = usdPairsSelector;
   const [price, setPrice] = React.useState("");
   const dispatch = useDispatch();
 
-  const exchangeAutoClick = React.useCallback(() => {
-    anchorRef.current.click();
-  }, [anchorRef.current]);
+  const exchangeAutoOpen = React.useCallback(() => {
+    setAnchorEl(anchorRef.current);
+    setOpen(true);
+  }, []);
 
   React.useEffect(() => {
     if (coinStatusSelector === "idle" && !coinAndExchangeStatusSelect) {
-      console.log("Exchange Auto Click");
-      exchangeAutoClick();
+      exchangeAutoOpen();
     }
-  }, [exchangeAutoClick, coinStatusSelector]);
+  }, [exchangeAutoOpen, coinStatusSelector]);
 
   const handleExchangePopperClick = (Event) => {
     if (Event.currentTarget.innerText !== undefined) {
