@@ -234,7 +234,8 @@ export default function Home() {
           }}
         >
           <Typography sx={{ p: 2 }}>
-            Coin "{coinSymbol}" not found! Please check spelling and retry.
+            Coin &quot;{coinSymbol}&quot; not found! Please check spelling and
+            retry.
           </Typography>
         </Popover>
       );
