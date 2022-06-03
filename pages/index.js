@@ -14,8 +14,8 @@ import {
   MenuList,
   MenuItem,
   Popover,
-  Button,
 } from "@mui/material";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,6 +42,7 @@ import { coinClear } from "../redux/slices/simplePriceSlice";
 import { fetchCoinsByMarketCap } from "../redux/slices/marketCapSlice";
 import { fetchAllCoins } from "../redux/slices/coinsAllSlice";
 import { fetchMarkets } from "../redux/slices/marketsSlice";
+import { useRef } from "react";
 
 // styled component section
 const Search = styled("div")(({ theme }) => ({
@@ -89,6 +90,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Home() {
   const dispatch = useDispatch();
+  const ref = useRef();
   // selectors
   const coinsAllSelector = useSelector(selectCoinsAll);
   const coinsOneThousandSelector = useSelector(selectCoinsMCap);
@@ -109,6 +111,7 @@ export default function Home() {
   const [usdFilter, setUsdFilter] = React.useState(false);
   const [coin, setCoin] = React.useState("");
   const [elementNum, setElementNum] = React.useState(0);
+  const [width, setWidth] = React.useState(0);
   let coinMatch = false;
 
   React.useEffect(() => {
@@ -123,6 +126,7 @@ export default function Home() {
     }
     dispatch(saveCoinAndExchange(coinObj()));
   }, []);
+
   //Called when search bar is being populated
   React.useEffect(() => {
     if (coinSymbol !== "") {
@@ -141,6 +145,187 @@ export default function Home() {
       setUsdFilter(true);
     }
   }, [marketsStatusSelector]);
+
+  // const getAppBarWidth = () => {
+  //   if (ref.current !== null) {
+  //     setWidth(ref.current.offsetWidth);
+  //   }
+  // };
+
+  // React.useEffect(() => {
+  //   window.addEventListener("resize", getAppBarWidth);
+  //   //getAppBarWidth();
+  // }, []);
+
+  // React.useEffect(() => {
+  //   getAppBarWidth();
+  //   if (width <= 648) {
+  //     console.log("width <= 648");
+  //   } else console.log("width > 648");
+  // }, [width]);
+
+  // const AppBarSwitch = () => {
+  //   if (width > 648) {
+  //     return (
+  //       <AppBar style={{ backgroundColor: "midnightblue" }} position="static">
+  //         <Toolbar>
+  //           <IconButton
+  //             size="large"
+  //             edge="start"
+  //             color="inherit"
+  //             aria-label="open-drawer"
+  //             sx={{ mr: 2 }}
+  //           >
+  //             <MenuRoundedIcon style={{ color: "#fff8dc" }} />
+  //           </IconButton>
+  //           <Typography
+  //             variant="h6"
+  //             sx={{
+  //               color: "#fff8dc",
+  //             }}
+  //           >
+  //             CryptoMon
+  //           </Typography>
+  //           <IconButton
+  //             onClick={() => router.replace("https://tommyj.net/portfolio")}
+  //           >
+  //             <BusinessCenterIcon
+  //               style={{
+  //                 color: "white",
+  //               }}
+  //             ></BusinessCenterIcon>
+  //           </IconButton>
+  //           <ExchangeButton />
+  //           <Search hidden={isExchangesSelector} data-testid="search-bar">
+  //             <SearchIconWrapper aria-label="search-icon">
+  //               <SearchRoundedIcon />
+  //             </SearchIconWrapper>
+  //             <StyledInputBase
+  //               placeholder="Search coin…"
+  //               inputProps={{ "aria-label": "search" }}
+  //               onChange={handleChange}
+  //               onKeyPress={handleSearchOnEnter}
+  //               value={coinSymbol}
+  //             ></StyledInputBase>
+  //           </Search>
+
+  //           <Popper
+  //             aria-label="popper"
+  //             open={open}
+  //             anchorEl={anchorEl}
+  //             placement="bottom-end"
+  //           >
+  //             <Paper>
+  //               <ClickAwayListener onClickAway={handleClickAway}>
+  //                 <MenuList
+  //                   style={{
+  //                     backgroundColor: "#fff8dc",
+  //                   }}
+  //                 >
+  //                   {coinList.map((listItem, index) => (
+  //                     <MenuItem
+  //                       style={{ color: "blue" }}
+  //                       key={index}
+  //                       onClick={handleClick}
+  //                     >
+  //                       {listItem}
+  //                     </MenuItem>
+  //                   ))}
+  //                 </MenuList>
+  //               </ClickAwayListener>
+  //             </Paper>
+  //           </Popper>
+  //         </Toolbar>
+  //       </AppBar>
+  //     );
+  //   } else {
+  //     return (
+  //       <Box>
+  //         <AppBar style={{ backgroundColor: "midnightblue" }} position="static">
+  //           <Toolbar>
+  //             <IconButton
+  //               size="large"
+  //               edge="start"
+  //               color="inherit"
+  //               aria-label="open-drawer"
+  //               sx={{ mr: 2 }}
+  //             >
+  //               <MenuRoundedIcon style={{ color: "#fff8dc" }} />
+  //             </IconButton>
+  //             <Typography
+  //               variant="h6"
+  //               noWrap
+  //               component="div"
+  //               sx={{
+  //                 color: "#fff8dc",
+  //                 // flexGrow: 1,
+  //                 // display: { xs: "none", sm: "block" },
+  //               }}
+  //             >
+  //               CryptoMon
+  //             </Typography>
+  //             <IconButton
+  //               style={{
+  //                 marginLeft: "5px",
+  //                 //marginRight: "20px",
+  //               }}
+  //               onClick={() => router.replace("https://tommyj.net/portfolio")}
+  //             >
+  //               <BusinessCenterIcon
+  //                 style={{
+  //                   color: "white",
+  //                 }}
+  //               ></BusinessCenterIcon>
+  //             </IconButton>
+  //           </Toolbar>
+  //         </AppBar>
+  //         <AppBar style={{ backgroundColor: "midnightblue" }} position="static">
+  //           <Toolbar>
+  //             <ExchangeButton />
+  //             <Search hidden={isExchangesSelector} data-testid="search-bar">
+  //               <SearchIconWrapper aria-label="search-icon">
+  //                 <SearchRoundedIcon />
+  //               </SearchIconWrapper>
+  //               <StyledInputBase
+  //                 placeholder="Search coin…"
+  //                 inputProps={{ "aria-label": "search" }}
+  //                 onChange={handleChange}
+  //                 onKeyPress={handleSearchOnEnter}
+  //                 value={coinSymbol}
+  //               ></StyledInputBase>
+  //             </Search>
+  //             <Popper
+  //               aria-label="popper"
+  //               open={open}
+  //               anchorEl={anchorEl}
+  //               placement="bottom-end"
+  //             >
+  //               <Paper>
+  //                 <ClickAwayListener onClickAway={handleClickAway}>
+  //                   <MenuList
+  //                     style={{
+  //                       backgroundColor: "#fff8dc",
+  //                     }}
+  //                   >
+  //                     {coinList.map((listItem, index) => (
+  //                       <MenuItem
+  //                         style={{ color: "blue" }}
+  //                         key={index}
+  //                         onClick={handleClick}
+  //                       >
+  //                         {listItem}
+  //                       </MenuItem>
+  //                     ))}
+  //                   </MenuList>
+  //                 </ClickAwayListener>
+  //               </Paper>
+  //             </Popper>
+  //           </Toolbar>
+  //         </AppBar>
+  //       </Box>
+  //     );
+  //   }
+  // };
 
   function filterUsd() {
     let filteredByUsdPairs = [];
@@ -244,9 +429,10 @@ export default function Home() {
     }
     return null;
   };
+
   if (coinsMCapSelectStatus === "succeeded") {
     return (
-      <div className={styles.container}>
+      <Box className={styles.container}>
         <Head>
           <title>Crypto Dashboard</title>
           <meta name="description" content="Generated by create next app" />
@@ -270,16 +456,31 @@ export default function Home() {
                 </IconButton>
                 <Typography
                   variant="h6"
-                  noWrap
-                  component="div"
+                  // noWrap
+                  // component="div"
                   sx={{
                     color: "#fff8dc",
-                    flexGrow: 1,
-                    // display: { xs: "none", sm: "block" },
+                    // flexGrow: 1,
                   }}
                 >
                   CryptoMon
                 </Typography>
+                <IconButton
+                  onClick={() => router.replace("https://tommyj.net/portfolio")}
+                >
+                  <BusinessCenterIcon
+                    style={{
+                      color: "#fff8dc",
+                    }}
+                  ></BusinessCenterIcon>
+                </IconButton>
+                <Box
+                  noWrap
+                  component="div"
+                  sx={{
+                    flexGrow: 1,
+                  }}
+                />
                 <ExchangeButton />
                 <Search hidden={isExchangesSelector} data-testid="search-bar">
                   <SearchIconWrapper aria-label="search-icon">
@@ -326,7 +527,7 @@ export default function Home() {
             <CoinList />
           </Box>
         </main>
-      </div>
+      </Box>
     );
   } else return null;
 }

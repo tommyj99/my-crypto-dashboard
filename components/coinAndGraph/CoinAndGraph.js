@@ -1,11 +1,10 @@
 import { Box, Paper, Typography } from "@mui/material";
 import {
-  selectCoinStatus,
   selectCoinsMCap,
   selectCoinAndExchange,
   selectCoinAndExchangeStatus,
 } from "../../redux/selectors";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import React from "react";
 import { useRef } from "react";
 import {
@@ -13,10 +12,8 @@ import {
   unixStartAndEndTimesLastCandle,
 } from "../../timeUtils/timeUtils";
 import MyChart from "../chart/MyChart";
-import { saveCoinAndExchange } from "../../redux/slices/marketsSlice";
 
 const CoinAndGraph = (props) => {
-  const dispatch = useDispatch();
   const ref = useRef();
   const coinsMCapSelect = useSelector(selectCoinsMCap);
   const coinAndExchangeSelect = useSelector(selectCoinAndExchange);
