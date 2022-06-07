@@ -67,7 +67,7 @@ const CoinAndGraph = (props) => {
   }, [cryptoBox, isImageSmall]);
 
   React.useEffect(() => {
-    if (width <= 648) {
+    if (width <= 675) {
       setIsImageSmall(true);
     } else setIsImageSmall(false);
   }, [width]);
@@ -103,7 +103,7 @@ const CoinAndGraph = (props) => {
       ref={ref}
       sx={{
         display: "flex",
-        flexWrap: width <= 648 ? "wrap" : undefined,
+        flexWrap: width <= 675 ? "wrap" : undefined,
         height: "65vh",
         minHeight: "550px",
         backgroundColor: "gray",
@@ -148,7 +148,7 @@ const CoinAndGraph = (props) => {
       />
       <Box
         sx={{
-          width: width <= 648 ? "360px" : "75.4vw",
+          width: width <= 700 ? "360px" : "75.4vw",
           minWidth: "375px",
           minHeight: "260px", // check this
         }}
