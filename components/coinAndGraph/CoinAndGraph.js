@@ -67,7 +67,6 @@ const CoinAndGraph = (props) => {
   }, [cryptoBox, isImageSmall]);
 
   React.useEffect(() => {
-    getChartWidth();
     if (width <= 648) {
       setIsImageSmall(true);
     } else setIsImageSmall(false);

@@ -43,6 +43,7 @@ import { fetchCoinsByMarketCap } from "../redux/slices/marketCapSlice";
 import { fetchAllCoins } from "../redux/slices/coinsAllSlice";
 import { fetchMarkets } from "../redux/slices/marketsSlice";
 import { useRef } from "react";
+import Router from "next/router";
 
 // styled component section
 const Search = styled("div")(({ theme }) => ({
@@ -90,7 +91,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Home() {
   const dispatch = useDispatch();
-  const ref = useRef();
+  const appBarRef = useRef();
+  const router = Router;
   // selectors
   const coinsAllSelector = useSelector(selectCoinsAll);
   const coinsOneThousandSelector = useSelector(selectCoinsMCap);
@@ -111,7 +113,7 @@ export default function Home() {
   const [usdFilter, setUsdFilter] = React.useState(false);
   const [coin, setCoin] = React.useState("");
   const [elementNum, setElementNum] = React.useState(0);
-  const [width, setWidth] = React.useState(0);
+  const [width, setWidth] = React.useState();
   let coinMatch = false;
 
   React.useEffect(() => {
@@ -146,186 +148,15 @@ export default function Home() {
     }
   }, [marketsStatusSelector]);
 
-  // const getAppBarWidth = () => {
-  //   if (ref.current !== null) {
-  //     setWidth(ref.current.offsetWidth);
-  //   }
-  // };
+  React.useEffect(() => {
+    window.addEventListener("resize", getMainWidth);
+  }, []);
 
-  // React.useEffect(() => {
-  //   window.addEventListener("resize", getAppBarWidth);
-  //   //getAppBarWidth();
-  // }, []);
-
-  // React.useEffect(() => {
-  //   getAppBarWidth();
-  //   if (width <= 648) {
-  //     console.log("width <= 648");
-  //   } else console.log("width > 648");
-  // }, [width]);
-
-  // const AppBarSwitch = () => {
-  //   if (width > 648) {
-  //     return (
-  //       <AppBar style={{ backgroundColor: "midnightblue" }} position="static">
-  //         <Toolbar>
-  //           <IconButton
-  //             size="large"
-  //             edge="start"
-  //             color="inherit"
-  //             aria-label="open-drawer"
-  //             sx={{ mr: 2 }}
-  //           >
-  //             <MenuRoundedIcon style={{ color: "#fff8dc" }} />
-  //           </IconButton>
-  //           <Typography
-  //             variant="h6"
-  //             sx={{
-  //               color: "#fff8dc",
-  //             }}
-  //           >
-  //             CryptoMon
-  //           </Typography>
-  //           <IconButton
-  //             onClick={() => router.replace("https://tommyj.net/portfolio")}
-  //           >
-  //             <BusinessCenterIcon
-  //               style={{
-  //                 color: "white",
-  //               }}
-  //             ></BusinessCenterIcon>
-  //           </IconButton>
-  //           <ExchangeButton />
-  //           <Search hidden={isExchangesSelector} data-testid="search-bar">
-  //             <SearchIconWrapper aria-label="search-icon">
-  //               <SearchRoundedIcon />
-  //             </SearchIconWrapper>
-  //             <StyledInputBase
-  //               placeholder="Search coin…"
-  //               inputProps={{ "aria-label": "search" }}
-  //               onChange={handleChange}
-  //               onKeyPress={handleSearchOnEnter}
-  //               value={coinSymbol}
-  //             ></StyledInputBase>
-  //           </Search>
-
-  //           <Popper
-  //             aria-label="popper"
-  //             open={open}
-  //             anchorEl={anchorEl}
-  //             placement="bottom-end"
-  //           >
-  //             <Paper>
-  //               <ClickAwayListener onClickAway={handleClickAway}>
-  //                 <MenuList
-  //                   style={{
-  //                     backgroundColor: "#fff8dc",
-  //                   }}
-  //                 >
-  //                   {coinList.map((listItem, index) => (
-  //                     <MenuItem
-  //                       style={{ color: "blue" }}
-  //                       key={index}
-  //                       onClick={handleClick}
-  //                     >
-  //                       {listItem}
-  //                     </MenuItem>
-  //                   ))}
-  //                 </MenuList>
-  //               </ClickAwayListener>
-  //             </Paper>
-  //           </Popper>
-  //         </Toolbar>
-  //       </AppBar>
-  //     );
-  //   } else {
-  //     return (
-  //       <Box>
-  //         <AppBar style={{ backgroundColor: "midnightblue" }} position="static">
-  //           <Toolbar>
-  //             <IconButton
-  //               size="large"
-  //               edge="start"
-  //               color="inherit"
-  //               aria-label="open-drawer"
-  //               sx={{ mr: 2 }}
-  //             >
-  //               <MenuRoundedIcon style={{ color: "#fff8dc" }} />
-  //             </IconButton>
-  //             <Typography
-  //               variant="h6"
-  //               noWrap
-  //               component="div"
-  //               sx={{
-  //                 color: "#fff8dc",
-  //                 // flexGrow: 1,
-  //                 // display: { xs: "none", sm: "block" },
-  //               }}
-  //             >
-  //               CryptoMon
-  //             </Typography>
-  //             <IconButton
-  //               style={{
-  //                 marginLeft: "5px",
-  //                 //marginRight: "20px",
-  //               }}
-  //               onClick={() => router.replace("https://tommyj.net/portfolio")}
-  //             >
-  //               <BusinessCenterIcon
-  //                 style={{
-  //                   color: "white",
-  //                 }}
-  //               ></BusinessCenterIcon>
-  //             </IconButton>
-  //           </Toolbar>
-  //         </AppBar>
-  //         <AppBar style={{ backgroundColor: "midnightblue" }} position="static">
-  //           <Toolbar>
-  //             <ExchangeButton />
-  //             <Search hidden={isExchangesSelector} data-testid="search-bar">
-  //               <SearchIconWrapper aria-label="search-icon">
-  //                 <SearchRoundedIcon />
-  //               </SearchIconWrapper>
-  //               <StyledInputBase
-  //                 placeholder="Search coin…"
-  //                 inputProps={{ "aria-label": "search" }}
-  //                 onChange={handleChange}
-  //                 onKeyPress={handleSearchOnEnter}
-  //                 value={coinSymbol}
-  //               ></StyledInputBase>
-  //             </Search>
-  //             <Popper
-  //               aria-label="popper"
-  //               open={open}
-  //               anchorEl={anchorEl}
-  //               placement="bottom-end"
-  //             >
-  //               <Paper>
-  //                 <ClickAwayListener onClickAway={handleClickAway}>
-  //                   <MenuList
-  //                     style={{
-  //                       backgroundColor: "#fff8dc",
-  //                     }}
-  //                   >
-  //                     {coinList.map((listItem, index) => (
-  //                       <MenuItem
-  //                         style={{ color: "blue" }}
-  //                         key={index}
-  //                         onClick={handleClick}
-  //                       >
-  //                         {listItem}
-  //                       </MenuItem>
-  //                     ))}
-  //                   </MenuList>
-  //                 </ClickAwayListener>
-  //               </Paper>
-  //             </Popper>
-  //           </Toolbar>
-  //         </AppBar>
-  //       </Box>
-  //     );
-  //   }
-  // };
+  const getMainWidth = () => {
+    if (appBarRef.current !== null) {
+      setWidth(appBarRef.current.offsetWidth);
+    }
+  };
 
   function filterUsd() {
     let filteredByUsdPairs = [];
@@ -343,6 +174,7 @@ export default function Home() {
     setCoinList([]);
     if (Event.target.value !== undefined) {
       setCoinSymbol(Event.target.value.toLowerCase());
+      console.log("in event");
       setAnchorEl(Event.currentTarget);
       setOpen(true);
     }
@@ -432,14 +264,14 @@ export default function Home() {
 
   if (coinsMCapSelectStatus === "succeeded") {
     return (
-      <Box className={styles.container}>
+      <Box ref={appBarRef}>
         <Head>
           <title>Crypto Dashboard</title>
           <meta name="description" content="Generated by create next app" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <main className={styles.container}>
-          <Box>
+        <Box>
+          {width > 648 || window.innerWidth > 660 ? (
             <AppBar
               style={{ backgroundColor: "midnightblue" }}
               position="static"
@@ -456,16 +288,14 @@ export default function Home() {
                 </IconButton>
                 <Typography
                   variant="h6"
-                  // noWrap
-                  // component="div"
                   sx={{
                     color: "#fff8dc",
-                    // flexGrow: 1,
                   }}
                 >
                   CryptoMon
                 </Typography>
                 <IconButton
+                  sx={{ marginLeft: "170px", marginRight: "25px" }}
                   onClick={() => router.replace("https://tommyj.net/portfolio")}
                 >
                   <BusinessCenterIcon
@@ -494,7 +324,6 @@ export default function Home() {
                     value={coinSymbol}
                   ></StyledInputBase>
                 </Search>
-
                 <Popper
                   aria-label="popper"
                   open={open}
@@ -523,10 +352,97 @@ export default function Home() {
                 </Popper>
               </Toolbar>
             </AppBar>
-            <CoinAndGraph elementNum={elementNum} />
-            <CoinList />
-          </Box>
-        </main>
+          ) : (
+            <Box>
+              <AppBar
+                style={{ backgroundColor: "midnightblue" }}
+                position="static"
+              >
+                <Toolbar>
+                  <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="open-drawer"
+                    sx={{ mr: 2 }}
+                  >
+                    <MenuRoundedIcon style={{ color: "#fff8dc" }} />
+                  </IconButton>
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    sx={{
+                      color: "#fff8dc",
+                    }}
+                  >
+                    CryptoMon
+                  </Typography>
+                  <IconButton
+                    sx={{ marginLeft: "150px" }}
+                    onClick={() =>
+                      router.replace("https://tommyj.net/portfolio")
+                    }
+                  >
+                    <BusinessCenterIcon
+                      style={{
+                        color: "#fff8dc",
+                      }}
+                    ></BusinessCenterIcon>
+                  </IconButton>
+                </Toolbar>
+              </AppBar>
+              <AppBar
+                style={{ backgroundColor: "midnightblue" }}
+                position="static"
+              >
+                <Toolbar>
+                  <ExchangeButton />
+                  <Search hidden={isExchangesSelector} data-testid="search-bar">
+                    <SearchIconWrapper aria-label="search-icon">
+                      <SearchRoundedIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                      placeholder="Search coin…"
+                      inputProps={{ "aria-label": "search" }}
+                      onChange={handleChange}
+                      onKeyPress={handleSearchOnEnter}
+                      value={coinSymbol}
+                    ></StyledInputBase>
+                  </Search>
+                  <Popper
+                    aria-label="popper"
+                    open={open}
+                    anchorEl={anchorEl}
+                    placement="bottom-end"
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClickAway}>
+                        <MenuList
+                          style={{
+                            backgroundColor: "#fff8dc",
+                          }}
+                        >
+                          {coinList.map((listItem, index) => (
+                            <MenuItem
+                              style={{ color: "blue" }}
+                              key={index}
+                              onClick={handleClick}
+                            >
+                              {listItem}
+                            </MenuItem>
+                          ))}
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Popper>
+                </Toolbar>
+              </AppBar>
+            </Box>
+          )}
+          <CoinAndGraph elementNum={elementNum} />
+          <CoinList />
+        </Box>
       </Box>
     );
   } else return null;
