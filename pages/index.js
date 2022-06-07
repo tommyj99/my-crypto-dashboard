@@ -271,7 +271,7 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <Box>
-          {width > 675 || window.innerWidth > 685 ? (
+          {width > 648 || window.innerWidth > 660 ? (
             <AppBar
               style={{ backgroundColor: "midnightblue" }}
               position="static"
